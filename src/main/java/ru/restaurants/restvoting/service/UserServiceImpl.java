@@ -1,5 +1,6 @@
 package ru.restaurants.restvoting.service;
 
+import org.springframework.stereotype.Service;
 import ru.restaurants.restvoting.model.User;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
 
@@ -7,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class UserServiceImpl implements UserService {
     @Override
     public User create(User user) {

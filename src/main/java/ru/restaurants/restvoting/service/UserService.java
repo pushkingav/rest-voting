@@ -4,6 +4,7 @@ import ru.restaurants.restvoting.model.User;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public interface UserService {
 
     List<User> getAll();
 
-    boolean vote(User user, int restaurantId);
+    boolean vote(User user, int restaurantId, LocalDateTime dateTime);
 
     /**
     *   Get all votes for today in a map like restaurantId -> votesTodayCount

@@ -5,6 +5,7 @@ import ru.restaurants.restvoting.model.User;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean vote(User user, int restaurantId) {
+    public boolean vote(User user, int restaurantId, LocalDateTime dateTime) {
         return false;
     }
 

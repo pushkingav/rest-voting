@@ -9,15 +9,13 @@ import java.util.List;
 public interface DishService {
     Dish create(Dish dish);
 
-    void delete(int id) throws NotFoundException;
+    Dish update(Dish dish);
 
     Dish get(int id) throws NotFoundException;
 
-    User getByName(String name) throws NotFoundException;
+    void delete(int id) throws NotFoundException;
 
-    void update(User user);
+    List<Dish> getAllByRestaurant(int restaurantId);
 
-    List<User> getAll();
-
-    boolean vote(User user, int restaurant_id);
+    List <Dish> getAll();
 }

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Dish extends BaseEntity {
-    private Integer restaurant_id;
+    private Integer restaurantId;
     private String name;
     private BigDecimal price;
 

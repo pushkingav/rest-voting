@@ -1,43 +1,25 @@
 package ru.restaurants.restvoting.service;
 
 import org.springframework.stereotype.Service;
+import ru.restaurants.restvoting.model.Dish;
 import ru.restaurants.restvoting.model.User;
-import ru.restaurants.restvoting.util.exception.NotFoundException;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+
     @Override
-    public User create(User user) {
+    public Integer addRestaurant(String name) {
         return null;
     }
 
     @Override
-    public void delete(int id) throws NotFoundException {
-
-    }
-
-    @Override
-    public User get(int id) throws NotFoundException {
-        return null;
-    }
-
-    @Override
-    public User getByName(String name) throws NotFoundException {
-        return null;
-    }
-
-    @Override
-    public void update(User user) {
-
-    }
-
-    @Override
-    public List<User> getAll() {
+    public Dish createDish(String name, BigDecimal price, int restaurantId) {
         return null;
     }
 

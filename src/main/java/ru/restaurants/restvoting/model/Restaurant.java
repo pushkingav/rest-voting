@@ -1,6 +1,7 @@
 package ru.restaurants.restvoting.model;
 
 public class Restaurant extends BaseEntity {
+    private Integer id;
 
     private String name;
 
@@ -10,5 +11,15 @@ public class Restaurant extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

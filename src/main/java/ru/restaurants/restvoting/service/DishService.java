@@ -1,7 +1,6 @@
 package ru.restaurants.restvoting.service;
 
 import ru.restaurants.restvoting.model.Dish;
-import ru.restaurants.restvoting.model.User;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
 
 import java.util.List;
@@ -14,6 +13,8 @@ public interface DishService {
     Dish get(int id) throws NotFoundException;
 
     void delete(int id) throws NotFoundException;
+
+    List<Dish> addDishes(List<Dish> dishes);
 
     List<Dish> getAllByRestaurant(int restaurantId);
 

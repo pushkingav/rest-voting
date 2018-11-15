@@ -7,7 +7,9 @@ import java.util.List;
 public interface DishRepository {
     Dish save(Dish dish);
 
-    void deleteById(Integer integer);
+    void deleteById(Integer id);
+
+    Dish getById(Integer id);
 
     List<Dish> findAll();
 

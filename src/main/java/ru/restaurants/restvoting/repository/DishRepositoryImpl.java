@@ -22,6 +22,11 @@ public class DishRepositoryImpl implements DishRepository {
     }
 
     @Override
+    public Dish getById(Integer id) {
+        return crudDishRepository.getOne(id);
+    }
+
+    @Override
     public List<Dish> findAll() {
         return crudDishRepository.findAll();
     }

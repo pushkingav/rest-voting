@@ -15,7 +15,7 @@ public interface CrudDishRepository extends JpaRepository<Dish, Integer> {
     @Override
     //@Modifying - does not work here since no query provided
     @Transactional
-    void deleteById(Integer integer);
+    void deleteById(Integer id);
 
     @Override
     List<Dish> findAll();

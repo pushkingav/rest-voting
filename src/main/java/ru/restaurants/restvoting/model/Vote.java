@@ -2,7 +2,7 @@ package ru.restaurants.restvoting.model;
 
 import java.time.LocalDateTime;
 
-public class Vote extends BaseEntity {
+public class Vote extends AbstractBaseEntity {
     private Integer userId;
 
     /**

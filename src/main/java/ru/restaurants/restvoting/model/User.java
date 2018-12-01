@@ -1,17 +1,35 @@
 package ru.restaurants.restvoting.model;
 
-public class User extends BaseEntity {
-    private String name;
-    private String password;
-    private Role role;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import java.util.Set;
+
+@Entity
+@Table(name = "users")
+public class User extends AbstractBaseEntity {
+    @Column(name = "name", nullable = false, unique = true)
+    @NotEmpty
+    protected String name;
+
+    @Column(name = "password", nullable = false)
+    @NotEmpty
+    @Size(min = 5, max = 100)
+    protected String password;
+
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
+    protected Set<Role> roles;
 
     public User() {
     }
 
-    public User(String name, String password, Role role) {
+    public User(String name, String password, Set<Role> roles) {
         this.name = name;
         this.password = password;
-        this.role = role;
+        this.roles = roles;
     }
 
     public String getName() {
@@ -30,11 +48,11 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

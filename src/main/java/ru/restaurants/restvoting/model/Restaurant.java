@@ -1,6 +1,6 @@
 package ru.restaurants.restvoting.model;
 
-public class Restaurant extends BaseEntity {
+public class Restaurant extends AbstractBaseEntity {
     private Integer id;
 
     private String name;

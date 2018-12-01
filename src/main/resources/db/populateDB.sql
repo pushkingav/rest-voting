@@ -2,6 +2,7 @@ DELETE FROM user_roles;
 DELETE FROM dishes;
 DELETE FROM users;
 DELETE FROM restaurants;
+DELETE FROM MENU;
 DELETE FROM votes;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
@@ -17,7 +18,7 @@ VALUES  ('Петр Петрович'),
         ('Beerlin'),
         ('Столовая Полюшко');
 
-INSERT INTO dishes (name, date_time, price, restaurant_id)
+INSERT INTO dishes (description, date_time, price, restaurant_id)
 VALUES ('Овсянка', '2015-05-30 10:00:00', '70.00', 100004),
        ('Омлет', '2015-05-30 10:00:00', '85.00', 100004),
        ('Салатик', '2015-05-30 10:00:00', '60.00', 100004),

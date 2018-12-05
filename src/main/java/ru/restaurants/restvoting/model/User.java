@@ -3,6 +3,7 @@ package ru.restaurants.restvoting.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,6 +23,9 @@ public class User extends AbstractBaseEntity {
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
     protected Set<Role> roles;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    protected List<Vote> votes;
 
     public User() {
     }
@@ -54,5 +58,15 @@ public class User extends AbstractBaseEntity {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                ", votes=" + votes +
+                '}';
     }
 }

@@ -35,4 +35,46 @@ public class Dish extends AbstractBaseEntity {
 
     public Dish() {
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "description='" + description + '\'' +
+                ", price=" + price +
+                ", dateTime=" + dateTime +
+                ", restaurant=" + restaurant +
+                '}';
+    }
 }

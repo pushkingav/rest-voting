@@ -7,5 +7,6 @@
        http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="ru.restaurants.**.service"/>
-
+    <context:component-scan base-package="ru.restaurants.**.repository"/>
+    <context:component-scan base-package="ru.restaurants.**.web"/>
 </beans>

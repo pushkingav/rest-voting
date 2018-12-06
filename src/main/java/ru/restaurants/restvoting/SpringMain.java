@@ -10,6 +10,5 @@ public class SpringMain {
         try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml")) {
             System.out.println(Arrays.toString(appCtx.getBeanDefinitionNames()));
         }
-
     }
 }

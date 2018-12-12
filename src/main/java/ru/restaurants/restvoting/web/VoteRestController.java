@@ -2,7 +2,6 @@ package ru.restaurants.restvoting.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.restaurants.restvoting.model.Dish;
 import ru.restaurants.restvoting.service.DishService;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @ComponentScan
@@ -33,8 +31,7 @@ public class VoteRestController {
     }
 
     @GetMapping("/{id}")
-    public List<Dish> getDishesForRestaurantAndDate(@PathVariable("id") Integer id,
-                                                    @PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        return dishService.getAll();
+    public List<Dish> getDishesForRestaurantAndDate(@PathVariable("id") Integer id) {
+        return dishService.getAllByRestaurant(id);
     }
 }

@@ -8,12 +8,8 @@ import java.util.List;
 @Repository
 public class DishRepositoryImpl implements DishRepository {
 
-    private final CrudDishRepository crudDishRepository;
-
     @Autowired
-    public DishRepositoryImpl(CrudDishRepository crudDishRepository) {
-        this.crudDishRepository = crudDishRepository;
-    }
+    private CrudDishRepository crudDishRepository;
 
     @Override
     public Dish save(Dish dish) {

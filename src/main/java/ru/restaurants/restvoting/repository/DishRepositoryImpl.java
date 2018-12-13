@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.restaurants.restvoting.model.Dish;
 
 import java.util.List;
+
 @Repository
 public class DishRepositoryImpl implements DishRepository {
 

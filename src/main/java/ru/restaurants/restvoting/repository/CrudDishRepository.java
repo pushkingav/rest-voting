@@ -7,6 +7,7 @@ import ru.restaurants.restvoting.model.Dish;
 
 import java.util.List;
 
+//Proxy!
 @Transactional(readOnly = true)
 public interface CrudDishRepository extends JpaRepository<Dish, Integer> {
     @Override

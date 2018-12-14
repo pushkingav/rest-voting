@@ -1,7 +1,6 @@
 package ru.restaurants.restvoting.model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -27,13 +26,20 @@ public class Dish extends AbstractBaseEntity {
     @NotNull
     private LocalDateTime dateTime;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "restaurant_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
-    private Restaurant restaurant;
+    @JsonIgnore
+    protected Restaurant restaurant;
 
     public Dish() {
+    }
+
+    public Dish(Integer id, String description, BigDecimal price, LocalDateTime dateTime) {
+        super(id);
+        this.description = description;
+        this.price = price;
+        this.dateTime = dateTime;
     }
 
     public String getDescription() {
@@ -70,11 +76,9 @@ public class Dish extends AbstractBaseEntity {
 
     @Override
     public String toString() {
-        return "Dish{" +
-                "description='" + description + '\'' +
+        return "Dish{" + "id=" + id +
+                " description='" + description + '\'' +
                 ", price=" + price +
-                ", dateTime=" + dateTime +
-                ", restaurant=" + restaurant +
-                '}';
+                ", dateTime=" + dateTime + '}';
     }
 }

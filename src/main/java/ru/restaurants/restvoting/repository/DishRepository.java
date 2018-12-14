@@ -9,7 +9,7 @@ public interface DishRepository {
 
     void deleteById(Integer id);
 
-    Dish getById(Integer id);
+    Dish findById(Integer id);
 
     List<Dish> findAll();
 

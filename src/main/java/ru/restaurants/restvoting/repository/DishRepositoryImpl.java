@@ -23,8 +23,8 @@ public class DishRepositoryImpl implements DishRepository {
     }
 
     @Override
-    public Dish getById(Integer id) {
-        return crudDishRepository.getOne(id);
+    public Dish findById(Integer id) {
+        return crudDishRepository.findById(id).get();
     }
 
     @Override

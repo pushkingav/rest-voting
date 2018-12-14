@@ -21,6 +21,7 @@ public interface CrudDishRepository extends JpaRepository<Dish, Integer> {
 
     @Override
     @Query("SELECT d FROM Dish d where d.restaurant.id = 100003")
+//    @Query("SELECT d FROM Dish d JOIN FETCH d.restaurant where d.restaurant.id = 100003")
     List<Dish> findAll();
 
     List<Dish> findAllByRestaurantId(Integer restaurantId);

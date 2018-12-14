@@ -11,8 +11,16 @@ public class Restaurant extends AbstractBaseEntity {
     @NotBlank
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant", cascade = CascadeType.REMOVE, orphanRemoval = true)
     protected List<Dish> dishes;
+
+    public Restaurant(@NotBlank String name, List<Dish> dishes) {
+        this.name = name;
+        this.dishes = dishes;
+    }
+
+    public Restaurant() {
+    }
 
     public String getName() {
         return name;
@@ -34,7 +42,7 @@ public class Restaurant extends AbstractBaseEntity {
     public String toString() {
         return "Restaurant{" +
                 "name='" + name + '\'' +
-                ", dishes=" + dishes +
-                '}';
+                ", id=" + id +
+                "} ";
     }
 }

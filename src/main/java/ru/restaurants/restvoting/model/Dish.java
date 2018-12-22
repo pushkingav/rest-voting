@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "dishes")
@@ -80,5 +81,21 @@ public class Dish extends AbstractBaseEntity {
                 " description='" + description + '\'' +
                 ", price=" + price +
                 ", dateTime=" + dateTime + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Dish)) return false;
+        if (!super.equals(o)) return false;
+        Dish dish = (Dish) o;
+        return description.equals(dish.description) &&
+                price.equals(dish.price) &&
+                dateTime.equals(dish.dateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), description, price, dateTime);
     }
 }

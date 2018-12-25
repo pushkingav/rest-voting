@@ -1,13 +1,14 @@
-package ru.restaurants.restvoting.repository;
+package ru.restaurants.restvoting.repository.datajpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.restaurants.restvoting.model.Restaurant;
+import ru.restaurants.restvoting.repository.RestaurantRepository;
 
 import java.util.List;
 
 @Repository
-public class RestaurantRepositoryImpl implements RestaurantRepository {
+public class DataJpaRestaurantRepositoryImpl implements RestaurantRepository {
 
     @Autowired
     CrudRestaurantRepository restaurantRepository;

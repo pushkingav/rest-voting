@@ -1,20 +1,27 @@
-package ru.restaurants.restvoting.repository;
+package ru.restaurants.restvoting.repository.datajpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.restaurants.restvoting.model.Dish;
+import ru.restaurants.restvoting.repository.DishRepository;
 
 import java.util.List;
 
 @Repository
-public class DishRepositoryImpl implements DishRepository {
+public class DataJpaDishRepositoryImpl implements DishRepository {
+    @Autowired
+    private CrudRestaurantRepository crudRestaurantRepository;
 
     @Autowired
     private CrudDishRepository crudDishRepository;
 
     @Override
-    public Dish save(Dish dish) {
-        return crudDishRepository.save(dish);
+    @Transactional
+    public Dish save(Dish dish, int restaurant_id) {
+        dish.setRestaurant(crudRestaurantRepository.getOne(restaurant_id));
+        Dish d = crudDishRepository.save(dish);
+        return d;
     }
 
     @Override

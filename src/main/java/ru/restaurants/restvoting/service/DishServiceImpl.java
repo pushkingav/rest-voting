@@ -6,7 +6,6 @@ import ru.restaurants.restvoting.model.Dish;
 import ru.restaurants.restvoting.repository.DishRepository;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,13 +19,13 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public Dish create(Dish dish) {
-        return dishRepository.save(dish);
+    public Dish create(Dish dish, int restaurant_id) {
+        return dishRepository.save(dish, restaurant_id);
     }
 
     @Override
-    public Dish update(Dish dish) {
-        return dishRepository.save(dish);
+    public Dish update(Dish dish, int restaurant_id) {
+        return dishRepository.save(dish, restaurant_id);
     }
 
     @Override
@@ -41,13 +40,6 @@ public class DishServiceImpl implements DishService {
     @Override
     public void delete(int id) throws NotFoundException {
         dishRepository.deleteById(id);
-    }
-
-    @Override
-    public List<Dish> addDishes(List<Dish> dishes) {
-        List<Dish> result = new ArrayList<>();
-        dishes.forEach(dish -> result.add(dishRepository.save(dish)));
-       return result;
     }
 
     @Override

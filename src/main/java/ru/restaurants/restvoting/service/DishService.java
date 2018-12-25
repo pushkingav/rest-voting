@@ -6,15 +6,13 @@ import ru.restaurants.restvoting.util.exception.NotFoundException;
 import java.util.List;
 
 public interface DishService {
-    Dish create(Dish dish);
+    Dish create(Dish dish, int restaurant_id);
 
-    Dish update(Dish dish);
+    Dish update(Dish dish, int restaurant_id);
 
     Dish get(int id) throws NotFoundException;
 
     void delete(int id) throws NotFoundException;
-
-    List<Dish> addDishes(List<Dish> dishes);
 
     List<Dish> getAllByRestaurant(int restaurantId);
 

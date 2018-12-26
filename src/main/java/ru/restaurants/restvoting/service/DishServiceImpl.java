@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.restaurants.restvoting.model.Dish;
 import ru.restaurants.restvoting.repository.DishRepository;
+import ru.restaurants.restvoting.repository.RestaurantRepository;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
 
 import java.util.List;
@@ -14,6 +15,9 @@ public class DishServiceImpl implements DishService {
     private final DishRepository dishRepository;
 
     @Autowired
+    private RestaurantRepository restaurantRepository;
+
+    @Autowired
     public DishServiceImpl(DishRepository repository) {
         this.dishRepository = repository;
     }
@@ -21,6 +25,12 @@ public class DishServiceImpl implements DishService {
     @Override
     public Dish create(Dish dish, int restaurant_id) {
         return dishRepository.save(dish, restaurant_id);
+    }
+
+    @Override
+    public void addDishes(List<Dish> dishes, Integer restaurantId) {
+        //TODO - add logic for handling wrong restaurantIds
+        dishes.forEach(dish -> dishRepository.save(dish, restaurantId));
     }
 
     @Override

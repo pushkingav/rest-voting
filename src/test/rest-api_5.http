@@ -1,0 +1,10 @@
+GET http://localhost:18080/restvoting/rest/dishes
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-12-24T025935.200.json
+
+
+
+###
+

@@ -1,0 +1,10 @@
+POST http://localhost:18080/restvoting/rest/admin/add/many/100003
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+[{"dateTime":"2018-12-15T09:00","description":"Котлета1","price":100.00}, {"dateTime":"2018-12-15T09:00",
+  "description":"Солянка1","price":150.70}]
+
+###
+

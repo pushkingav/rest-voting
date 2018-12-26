@@ -14,4 +14,6 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Inte
 
     @Override
     Optional<Restaurant> findById(Integer integer);
+
+    Optional<Restaurant> findByName(String name);
 }

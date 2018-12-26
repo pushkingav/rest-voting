@@ -10,4 +10,6 @@ public interface RestaurantRepository {
     Restaurant getById(Integer id);
 
     List<Restaurant> getAll();
+
+    Restaurant getByName(String name);
 }

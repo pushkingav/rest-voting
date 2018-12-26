@@ -1,0 +1,15 @@
+GET http://localhost:8080/re/api/exports/getEndpointStatus/12
+Accept: */*
+Content-Type: application/json
+Cache-Control: no-cache
+Cookie: JSESSIONID=AE230B928F5B199644F16A3625A3ACF2
+
+
+<> 2018-12-25T064617.200.json
+<> 2018-12-25T031221.200.html
+<> 2018-12-25T031144.200.html
+<> 2018-12-25T031118.200.html
+<> 2018-12-25T031010.200.html
+
+###
+

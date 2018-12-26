@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.restaurants.restvoting.model.Dish;
 import ru.restaurants.restvoting.service.DishService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = AdminRestController.ADMIN_REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminRestController {
@@ -19,5 +21,11 @@ public class AdminRestController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addDish(@RequestBody Dish dish, @PathVariable("id") Integer restaurant_id) {
         dishService.create(dish, restaurant_id);
+    }
+
+    @PostMapping(value = "/add/many/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addManyDishes(@RequestBody List<Dish> dishes, @PathVariable Integer id) {
+        dishService.addDishes(dishes, id);
     }
 }

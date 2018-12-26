@@ -1,0 +1,6 @@
+GET http://localhost:18080/restvoting/rest/dishes
+Accept: */*
+Cache-Control: no-cache
+
+###
+

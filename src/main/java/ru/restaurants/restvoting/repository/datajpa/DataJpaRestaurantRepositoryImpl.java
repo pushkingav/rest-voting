@@ -27,4 +27,9 @@ public class DataJpaRestaurantRepositoryImpl implements RestaurantRepository {
     public List<Restaurant> getAll() {
         return restaurantRepository.findAll();
     }
+
+    @Override
+    public Restaurant getByName(String name) {
+        return restaurantRepository.findByName(name).get();
+    }
 }

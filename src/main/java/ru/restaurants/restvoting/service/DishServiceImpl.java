@@ -3,10 +3,13 @@ package ru.restaurants.restvoting.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.restaurants.restvoting.model.Dish;
+import ru.restaurants.restvoting.model.Vote;
 import ru.restaurants.restvoting.repository.DishRepository;
-import ru.restaurants.restvoting.repository.RestaurantRepository;
+import ru.restaurants.restvoting.repository.VoteRepository;
+import ru.restaurants.restvoting.util.LoggedUser;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -15,7 +18,7 @@ public class DishServiceImpl implements DishService {
     private final DishRepository dishRepository;
 
     @Autowired
-    private RestaurantRepository restaurantRepository;
+    private VoteRepository voteRepository;
 
     @Autowired
     public DishServiceImpl(DishRepository repository) {
@@ -60,5 +63,16 @@ public class DishServiceImpl implements DishService {
     @Override
     public List<Dish> getAll() {
         return dishRepository.findAll();
+    }
+
+    @Override
+    public boolean vote(int restaurantId) {
+        //Remember to run this app with option "-Duser.timezone=GMT" - to force date operations be in UTC timezone
+        LocalDateTime localDateTime = LocalDateTime.now();
+        Vote vote = new Vote();
+        vote.setDateTime(localDateTime);
+        vote.setRestaurantId(restaurantId);
+
+        return (voteRepository.saveOrUpdate(vote, LoggedUser.getLoggedUserId())) != null;
     }
 }

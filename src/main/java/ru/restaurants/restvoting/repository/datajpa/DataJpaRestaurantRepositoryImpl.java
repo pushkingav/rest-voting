@@ -11,7 +11,7 @@ import java.util.List;
 public class DataJpaRestaurantRepositoryImpl implements RestaurantRepository {
 
     @Autowired
-    CrudRestaurantRepository restaurantRepository;
+    CrudRestaurantRepository crudRestaurantRepository;
 
     @Override
     public void add(Restaurant restaurant) {
@@ -20,16 +20,16 @@ public class DataJpaRestaurantRepositoryImpl implements RestaurantRepository {
 
     @Override
     public Restaurant getById(Integer id) {
-        return restaurantRepository.findById(id).get();
+        return crudRestaurantRepository.findById(id).get();
     }
 
     @Override
     public List<Restaurant> getAll() {
-        return restaurantRepository.findAll();
+        return crudRestaurantRepository.findAll();
     }
 
     @Override
     public Restaurant getByName(String name) {
-        return restaurantRepository.findByName(name).get();
+        return crudRestaurantRepository.findByName(name).get();
     }
 }

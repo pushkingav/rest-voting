@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "votes")
 public class Vote extends AbstractBaseEntity {
-    private Integer userId;
-
     /**
      *  A date and time when this vote took place
      * */
@@ -29,12 +27,13 @@ public class Vote extends AbstractBaseEntity {
     @NotNull
     private User user;
 
-    public Integer getUserId() {
-        return userId;
+    public Vote(@NotNull LocalDateTime dateTime, @NotNull Integer restaurantId, @NotNull User user) {
+        this.dateTime = dateTime;
+        this.restaurantId = restaurantId;
+        this.user = user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public Vote() {
     }
 
     public LocalDateTime getDateTime() {
@@ -64,10 +63,9 @@ public class Vote extends AbstractBaseEntity {
     @Override
     public String toString() {
         return "Vote{" +
-                "userId=" + userId +
-                ", dateTime=" + dateTime +
+                "userId=" + user.getId() +
                 ", restaurantId=" + restaurantId +
-                ", user=" + user +
+                ", dateTime=" + dateTime +
                 '}';
     }
 }

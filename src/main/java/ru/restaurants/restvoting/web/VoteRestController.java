@@ -3,10 +3,7 @@ package ru.restaurants.restvoting.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.restaurants.restvoting.model.Dish;
 import ru.restaurants.restvoting.service.DishService;
 
@@ -33,5 +30,10 @@ public class VoteRestController {
     @GetMapping("/{id}")
     public List<Dish> getDishesForRestaurantAndDate(@PathVariable("id") Integer id) {
         return dishService.getAllByRestaurant(id);
+    }
+
+    @PostMapping("/{restaurant_id}")
+    public void voteForRestaurant(@PathVariable("restaurant_id") Integer restaurantId) {
+        dishService.vote(restaurantId);
     }
 }

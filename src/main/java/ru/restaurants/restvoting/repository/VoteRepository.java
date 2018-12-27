@@ -2,9 +2,15 @@ package ru.restaurants.restvoting.repository;
 
 import ru.restaurants.restvoting.model.Vote;
 
-public interface VoteRepository {
-    Vote save(Vote vote);
+import java.time.LocalDateTime;
+import java.util.List;
 
-    Vote update(Vote vote);
+public interface VoteRepository {
+
+    Vote saveOrUpdate(Vote vote, int userId);
+
+    List<Vote> getAll();
+
+    Vote getByUserAndDate(int userId, LocalDateTime localDateTime);
 
 }

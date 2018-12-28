@@ -7,7 +7,7 @@ import ru.restaurants.restvoting.model.Vote;
 import java.time.LocalDateTime;
 
 public interface CrudVoteRepository extends JpaRepository<Vote, Integer> {
-    Vote getByUserAndDate(User user, LocalDateTime date);
+    Vote getByUserAndDateTime(User user, LocalDateTime date);
 
 
 }

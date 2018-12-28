@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value=VoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteRestController {
-    static final String REST_URL = "/rest/dishes";
+    static final String REST_URL = "/rest/votes";
 
     private final DishService dishService;
 
@@ -25,11 +25,6 @@ public class VoteRestController {
     @GetMapping
     public List<Dish> getAll() {
         return dishService.getAll();
-    }
-
-    @GetMapping("/{id}")
-    public List<Dish> getDishesForRestaurantAndDate(@PathVariable("id") Integer id) {
-        return dishService.getAllByRestaurant(id);
     }
 
     @PostMapping("/{restaurant_id}")

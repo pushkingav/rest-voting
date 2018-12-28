@@ -1,0 +1,5 @@
+POST http://localhost:18080/restvoting/rest/votes/100002
+Accept: */*
+Cache-Control: no-cache
+
+###

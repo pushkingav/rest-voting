@@ -20,6 +20,10 @@ public class DataJpaVoteRepositoryImpl implements VoteRepository {
 
     @Override
     public Vote saveOrUpdate(Vote vote, int userId) {
+        User user = crudUserRepository.findById(LoggedUser.getLoggedUserId()).get();
+        if (user != null) {
+            vote.setUser(user);
+        }
         return crudVoteRepository.save(vote);
     }
 
@@ -31,6 +35,6 @@ public class DataJpaVoteRepositoryImpl implements VoteRepository {
     @Override
     public Vote getByUserAndDate(int userId, LocalDateTime localDateTime) {
         User user = crudUserRepository.findById(LoggedUser.getLoggedUserId()).get();
-        return crudVoteRepository.getByUserAndDate(user,localDateTime);
+        return crudVoteRepository.getByUserAndDateTime(user,localDateTime);
     }
 }

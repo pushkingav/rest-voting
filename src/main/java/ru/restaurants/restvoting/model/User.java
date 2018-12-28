@@ -65,8 +65,7 @@ public class User extends AbstractBaseEntity {
         return "User{" +
                 "name='" + name + '\'' +
                 ", password='" + password + '\'' +
-                ", roles=" + roles +
-                ", votes=" + votes +
-                '}';
+                ", id=" + id +
+                "} " + super.toString();
     }
 }

@@ -1,6 +1,0 @@
-GET http://localhost:18080/restvoting
-Accept: */*
-Cache-Control: no-cache
-
-###
-

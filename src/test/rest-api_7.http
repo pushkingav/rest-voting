@@ -1,8 +1,0 @@
-POST http://localhost:18080/restvoting/rest/admin/add
-Accept: */*
-Cache-Control: no-cache
-
-{"dateTime":"2018-12-15T09:00","description":"Котлета","price":100.00, "restaurant_id": 100002}
-
-###
-

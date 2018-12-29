@@ -56,7 +56,7 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public List<Dish> getAllByRestaurant(int restaurantId) {
+    public List<Dish> getAllByRestaurantId(int restaurantId) {
         return dishRepository.findAllByRestaurantId(restaurantId);
     }
 
@@ -69,6 +69,10 @@ public class DishServiceImpl implements DishService {
     public boolean vote(int restaurantId) {
         //Remember to run this app with option "-Duser.timezone=GMT" - to force date operations be in UTC timezone
         LocalDateTime localDateTime = LocalDateTime.now();
+
+        if (localDateTime.getHour() >= 11) {
+            return false;
+        }
         Vote vote = new Vote();
         vote.setDateTime(localDateTime);
         vote.setRestaurantId(restaurantId);

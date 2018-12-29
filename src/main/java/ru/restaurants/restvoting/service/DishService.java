@@ -16,7 +16,7 @@ public interface DishService {
 
     void addDishes(List<Dish> dishes, Integer restaurantId);
 
-    List<Dish> getAllByRestaurant(int restaurantId);
+    List<Dish> getAllByRestaurantId(int restaurantId);
 
     List <Dish> getAll();
 

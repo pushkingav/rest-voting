@@ -1,4 +1,4 @@
-POST http://localhost:18080/restvoting/rest/admin/dishes/add/many/100003
+POST http://localhost:18080/restvoting/rest/admin/dishes/add/many/100014
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -8,4 +8,6 @@ Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
   "description":"Солянка1","price":150.70}]
 
 ###
+
+
 

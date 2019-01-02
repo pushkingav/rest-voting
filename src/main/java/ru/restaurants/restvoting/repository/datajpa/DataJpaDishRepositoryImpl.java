@@ -20,8 +20,7 @@ public class DataJpaDishRepositoryImpl implements DishRepository {
     @Transactional
     public Dish save(Dish dish, int restaurant_id) {
         dish.setRestaurant(crudRestaurantRepository.getOne(restaurant_id));
-        Dish d = crudDishRepository.save(dish);
-        return d;
+        return crudDishRepository.save(dish);
     }
 
     @Override

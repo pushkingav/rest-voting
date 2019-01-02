@@ -31,11 +31,16 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public Restaurant addRestaurant(Restaurant restaurant, Integer id) {
-        if (id != null && restaurant.getId() == null) {
-            //Mentioned to update a restaurant, not to create a new one
-            restaurant.setId(id);
+        Restaurant checked = restaurantRepository.getByName(restaurant.getName());
+        if (checked != null) {
+            return null;
         }
         return restaurantRepository.add(restaurant);
+    }
+
+    @Override
+    public List<Restaurant> listAllRestaurants() {
+        return restaurantRepository.getAll();
     }
 
     @Override

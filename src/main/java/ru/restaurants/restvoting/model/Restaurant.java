@@ -1,8 +1,11 @@
 package ru.restaurants.restvoting.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="restaurants")
@@ -12,6 +15,7 @@ public class Restaurant extends AbstractBaseEntity {
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
     protected List<Dish> dishes;
 
     public Restaurant(@NotBlank String name, List<Dish> dishes) {
@@ -36,6 +40,20 @@ public class Restaurant extends AbstractBaseEntity {
 
     public void setDishes(List<Dish> dishes) {
         this.dishes = dishes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Restaurant that = (Restaurant) o;
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), name);
     }
 
     @Override

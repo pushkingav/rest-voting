@@ -5,7 +5,8 @@ import ru.restaurants.restvoting.model.Restaurant;
 import java.util.List;
 
 public interface RestaurantRepository {
-    void add(Restaurant restaurant);
+
+    Restaurant add(Restaurant restaurant);
 
     Restaurant getById(Integer id);
 

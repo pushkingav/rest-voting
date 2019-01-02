@@ -14,6 +14,10 @@ public class User extends AbstractBaseEntity {
     @NotEmpty
     protected String name;
 
+    @Column(name = "email", nullable = false, unique = false)
+    @NotEmpty
+    protected String email;
+
     @Column(name = "password", nullable = false)
     @NotEmpty
     @Size(min = 5, max = 100)
@@ -45,6 +49,14 @@ public class User extends AbstractBaseEntity {
         this.name = name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -65,7 +77,7 @@ public class User extends AbstractBaseEntity {
     public String toString() {
         return "User{" +
                 "name='" + name + '\'' +
-                ", password='" + password + '\'' +
+                ", password=<PROTECTED>" +
                 ", id=" + id +
                 "} " + super.toString();
     }

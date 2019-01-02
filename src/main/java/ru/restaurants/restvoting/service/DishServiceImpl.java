@@ -3,8 +3,10 @@ package ru.restaurants.restvoting.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.restaurants.restvoting.model.Dish;
+import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.model.Vote;
 import ru.restaurants.restvoting.repository.DishRepository;
+import ru.restaurants.restvoting.repository.RestaurantRepository;
 import ru.restaurants.restvoting.repository.VoteRepository;
 import ru.restaurants.restvoting.util.LoggedUser;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
@@ -14,15 +16,26 @@ import java.util.List;
 
 @Service
 public class DishServiceImpl implements DishService {
-
-    private final DishRepository dishRepository;
+    @Autowired
+    private RestaurantRepository restaurantRepository;
 
     @Autowired
     private VoteRepository voteRepository;
 
+    private final DishRepository dishRepository;
+
     @Autowired
     public DishServiceImpl(DishRepository repository) {
         this.dishRepository = repository;
+    }
+
+    @Override
+    public Restaurant addRestaurant(Restaurant restaurant, Integer id) {
+        if (id != null && restaurant.getId() == null) {
+            //Mentioned to update a restaurant, not to create a new one
+            restaurant.setId(id);
+        }
+        return restaurantRepository.add(restaurant);
     }
 
     @Override

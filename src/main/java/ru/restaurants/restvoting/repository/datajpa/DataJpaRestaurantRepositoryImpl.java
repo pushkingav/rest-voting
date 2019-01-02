@@ -14,8 +14,8 @@ public class DataJpaRestaurantRepositoryImpl implements RestaurantRepository {
     CrudRestaurantRepository crudRestaurantRepository;
 
     @Override
-    public void add(Restaurant restaurant) {
-        //TODO - add something!
+    public Restaurant add(Restaurant restaurant) {
+        return crudRestaurantRepository.save(restaurant);
     }
 
     @Override

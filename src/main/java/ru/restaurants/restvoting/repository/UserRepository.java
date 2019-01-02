@@ -9,5 +9,7 @@ public interface UserRepository {
 
     User getByName(String name);
 
+    User getByEmail(String email);
+
     List<User> getAll();
 }

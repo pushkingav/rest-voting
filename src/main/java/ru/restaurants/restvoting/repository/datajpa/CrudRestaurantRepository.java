@@ -10,6 +10,9 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Integer> {
     @Override
+    Restaurant save(Restaurant restaurant);
+
+    @Override
     List<Restaurant> findAll();
 
     @Override

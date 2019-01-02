@@ -23,6 +23,10 @@ public class DataJpaUserRepositoryImpl implements UserRepository {
         return crudUserRepository.findByName(name);
     }
 
+    public User getByEmail(String email) {
+        return crudUserRepository.findByEmail(email);
+    }
+
     @Override
     public List<User> getAll() {
         return crudUserRepository.findAll();

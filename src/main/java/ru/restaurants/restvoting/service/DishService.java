@@ -1,14 +1,17 @@
 package ru.restaurants.restvoting.service;
 
 import ru.restaurants.restvoting.model.Dish;
+import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
 
 import java.util.List;
 
 public interface DishService {
-    Dish create(Dish dish, int restaurant_id);
+    Restaurant addRestaurant(Restaurant restaurant, Integer restaurantId);
 
-    Dish update(Dish dish, int restaurant_id);
+    Dish create(Dish dish, int restaurantId);
+
+    Dish update(Dish dish, int restaurantId);
 
     Dish get(int id) throws NotFoundException;
 

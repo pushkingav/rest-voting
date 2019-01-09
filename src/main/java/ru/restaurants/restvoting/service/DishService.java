@@ -24,6 +24,4 @@ public interface DishService {
     List<Dish> getAllByRestaurantId(int restaurantId);
 
     List <Dish> getAll();
-
-    boolean vote(int restaurantId);
 }

@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.restaurants.restvoting.model.Dish;
 import ru.restaurants.restvoting.service.DishService;
+import ru.restaurants.restvoting.service.UserService;
 
 import java.util.List;
 
@@ -14,6 +15,9 @@ import java.util.List;
 @RequestMapping(value=VoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteRestController {
     static final String REST_URL = "/rest/votes";
+
+    @Autowired
+    private UserService userService;
 
     private final DishService dishService;
 
@@ -29,6 +33,6 @@ public class VoteRestController {
 
     @PostMapping("/{restaurant_id}")
     public void voteForRestaurant(@PathVariable("restaurant_id") Integer restaurantId) {
-        dishService.vote(restaurantId);
+        userService.vote(restaurantId);
     }
 }

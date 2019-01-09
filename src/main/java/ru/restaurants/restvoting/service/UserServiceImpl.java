@@ -6,13 +6,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.restaurants.restvoting.AuthorizedUser;
-import ru.restaurants.restvoting.model.Dish;
 import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.model.User;
+import ru.restaurants.restvoting.model.Vote;
 import ru.restaurants.restvoting.repository.RestaurantRepository;
 import ru.restaurants.restvoting.repository.UserRepository;
+import ru.restaurants.restvoting.repository.VoteRepository;
+import ru.restaurants.restvoting.util.LoggedUser;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,6 +25,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private RestaurantRepository restaurantRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private VoteRepository voteRepository;
 
     @Override
     public Integer addRestaurant(String name) {
@@ -41,13 +44,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Dish createDish(String name, BigDecimal price, int restaurantId) {
-        return null;
-    }
+    public boolean vote(int restaurantId) {
+        //Remember to run this app with option "-Duser.timezone=GMT" - to force date operations be in UTC timezone
+        LocalDateTime localDateTime = LocalDateTime.now();
 
-    @Override
-    public boolean vote(User user, int restaurantId, LocalDateTime dateTime) {
-        return false;
+        if (localDateTime.getHour() >= 11) {
+            return false;
+        }
+        Vote vote = new Vote();
+        vote.setDateTime(localDateTime);
+        vote.setRestaurantId(restaurantId);
+
+        return (voteRepository.saveOrUpdate(vote, LoggedUser.getLoggedUserId())) != null;
     }
 
     @Override

@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import ru.restaurants.restvoting.model.Dish;
-import ru.restaurants.restvoting.service.DishService;
 import ru.restaurants.restvoting.service.UserService;
+import ru.restaurants.restvoting.util.SecurityUtil;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Map;
 
 @ComponentScan
 @RestController
@@ -19,20 +19,14 @@ public class VoteRestController {
     @Autowired
     private UserService userService;
 
-    private final DishService dishService;
-
-    @Autowired
-    public VoteRestController(DishService dishService) {
-        this.dishService = dishService;
-    }
-
-    @GetMapping
-    public List<Dish> getAll() {
-        return dishService.getAll();
+    @GetMapping("/{date}")
+    public Map<Integer, Integer> getVotesForDate(@PathVariable("date") LocalDate localDate) {
+        return userService.getVotesForDate(localDate);
     }
 
     @PostMapping("/{restaurant_id}")
     public void voteForRestaurant(@PathVariable("restaurant_id") Integer restaurantId) {
-        userService.vote(restaurantId);
+        int userId = SecurityUtil.authUserId();
+        userService.vote(restaurantId, userId);
     }
 }

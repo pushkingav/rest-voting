@@ -14,12 +14,7 @@ public interface UserService {
 
     Restaurant getRestaurantById(Integer id);
 
-    boolean vote(int restaurantId);
-
-    /**
-    *   Get all votes for today in a map like restaurantId -> votesTodayCount
-    * */
-    Map<Integer, Integer> getTodayVotes();
+    boolean vote(int restaurantId, int userId);
 
     /**
      *   Get all votes for custom date in a map like restaurantId -> votesTodayCount

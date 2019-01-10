@@ -6,18 +6,20 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.restaurants.restvoting.AuthorizedUser;
+import ru.restaurants.restvoting.model.AbstractBaseEntity;
 import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.model.User;
 import ru.restaurants.restvoting.model.Vote;
 import ru.restaurants.restvoting.repository.RestaurantRepository;
 import ru.restaurants.restvoting.repository.UserRepository;
 import ru.restaurants.restvoting.repository.VoteRepository;
-import ru.restaurants.restvoting.util.LoggedUser;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -44,7 +46,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public boolean vote(int restaurantId) {
+    public boolean vote(int restaurantId, int userId) {
         //Remember to run this app with option "-Duser.timezone=GMT" - to force date operations be in UTC timezone
         LocalDateTime localDateTime = LocalDateTime.now();
 
@@ -55,17 +57,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         vote.setDateTime(localDateTime);
         vote.setRestaurantId(restaurantId);
 
-        return (voteRepository.saveOrUpdate(vote, LoggedUser.getLoggedUserId())) != null;
-    }
-
-    @Override
-    public Map<Integer, Integer> getTodayVotes() {
-        return null;
+        return (voteRepository.saveOrUpdate(vote, userId)) != null;
     }
 
     @Override
     public Map<Integer, Integer> getVotesForDate(LocalDate date) {
-        return null;
+        List<Integer> restaurant_ids = restaurantRepository.getAll()
+                .stream().map(AbstractBaseEntity::getId).collect(Collectors.toList());
+        Map<Integer, Integer> result = new HashMap<>();
+        restaurant_ids.forEach(r_id -> result.put(r_id, voteRepository.countByDateTimeAndRestaurantId(date, r_id)));
+        return result;
     }
 
     @Override

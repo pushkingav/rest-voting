@@ -2,7 +2,7 @@ package ru.restaurants.restvoting.repository;
 
 import ru.restaurants.restvoting.model.Vote;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface VoteRepository {
@@ -11,6 +11,8 @@ public interface VoteRepository {
 
     List<Vote> getAll();
 
-    Vote getByUserAndDate(int userId, LocalDateTime localDateTime);
+    Integer countByDateTimeAndRestaurantId(LocalDate date, int restaurantId);
+
+    //select count(USER_ID) from Votes where date_time is ...
 
 }

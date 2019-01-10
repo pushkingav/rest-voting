@@ -5,9 +5,8 @@ import org.springframework.stereotype.Repository;
 import ru.restaurants.restvoting.model.User;
 import ru.restaurants.restvoting.model.Vote;
 import ru.restaurants.restvoting.repository.VoteRepository;
-import ru.restaurants.restvoting.util.LoggedUser;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -20,7 +19,7 @@ public class DataJpaVoteRepositoryImpl implements VoteRepository {
 
     @Override
     public Vote saveOrUpdate(Vote vote, int userId) {
-        User user = crudUserRepository.findById(LoggedUser.getLoggedUserId()).get();
+        User user = crudUserRepository.findById(userId).get();
         if (user != null) {
             vote.setUser(user);
         }
@@ -32,9 +31,7 @@ public class DataJpaVoteRepositoryImpl implements VoteRepository {
         return crudVoteRepository.findAll();
     }
 
-    @Override
-    public Vote getByUserAndDate(int userId, LocalDateTime localDateTime) {
-        User user = crudUserRepository.findById(LoggedUser.getLoggedUserId()).get();
-        return crudVoteRepository.getByUserAndDateTime(user,localDateTime);
+    public Integer countByDateTimeAndRestaurantId(LocalDate date, int restaurantId) {
+        return crudVoteRepository.countByDateTimeAndRestaurantId(date, restaurantId);
     }
 }

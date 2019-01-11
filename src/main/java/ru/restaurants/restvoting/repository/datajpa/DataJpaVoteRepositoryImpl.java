@@ -31,7 +31,7 @@ public class DataJpaVoteRepositoryImpl implements VoteRepository {
         return crudVoteRepository.findAll();
     }
 
-    public Integer countByDateTimeAndRestaurantId(LocalDate date, int restaurantId) {
-        return crudVoteRepository.countByDateTimeAndRestaurantId(date, restaurantId);
+    public Integer countByDateAndRestaurantId(LocalDate date, int restaurantId) {
+        return crudVoteRepository.countByDateAndRestaurantId(date, restaurantId);
     }
 }

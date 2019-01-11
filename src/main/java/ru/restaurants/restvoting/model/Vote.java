@@ -5,7 +5,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "votes")
@@ -13,9 +13,8 @@ public class Vote extends AbstractBaseEntity {
     /**
      *  A date and time when this vote took place
      * */
-    @Column(name="date_time", nullable = false)
-    @NotNull
-    private LocalDateTime dateTime;
+    @Column(name="date", nullable = false)
+    private @NotNull LocalDate date;
 
     @Column(name="restaurant_id", nullable = false)
     @NotNull
@@ -27,8 +26,8 @@ public class Vote extends AbstractBaseEntity {
     @NotNull
     private User user;
 
-    public Vote(@NotNull LocalDateTime dateTime, @NotNull Integer restaurantId, @NotNull User user) {
-        this.dateTime = dateTime;
+    public Vote(@NotNull LocalDate date, @NotNull Integer restaurantId, @NotNull User user) {
+        this.date = date;
         this.restaurantId = restaurantId;
         this.user = user;
     }
@@ -36,12 +35,12 @@ public class Vote extends AbstractBaseEntity {
     public Vote() {
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public @NotNull LocalDate getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(@NotNull LocalDate dateTime) {
+        this.date = dateTime;
     }
 
     public Integer getRestaurantId() {
@@ -65,7 +64,7 @@ public class Vote extends AbstractBaseEntity {
         return "Vote{" +
                 "userId=" + user.getId() +
                 ", restaurantId=" + restaurantId +
-                ", dateTime=" + dateTime +
+                ", dateTime=" + date +
                 '}';
     }
 }

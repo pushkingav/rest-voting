@@ -49,14 +49,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public boolean vote(int restaurantId, int userId) {
         //Remember to run this app with option "-Duser.timezone=GMT" - to force date operations be in UTC timezone
         LocalDateTime localDateTime = LocalDateTime.now();
-
         if (localDateTime.getHour() >= 11) {
             return false;
+            //TODO - Add a correct HTTP response here - it should throw a correct error that shows which constraints are violated
         }
         Vote vote = new Vote();
-        vote.setDateTime(localDateTime);
+        vote.setDate(localDateTime.toLocalDate());
         vote.setRestaurantId(restaurantId);
-
         return (voteRepository.saveOrUpdate(vote, userId)) != null;
     }
 
@@ -65,7 +64,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         List<Integer> restaurant_ids = restaurantRepository.getAll()
                 .stream().map(AbstractBaseEntity::getId).collect(Collectors.toList());
         Map<Integer, Integer> result = new HashMap<>();
-        restaurant_ids.forEach(r_id -> result.put(r_id, voteRepository.countByDateTimeAndRestaurantId(date, r_id)));
+        restaurant_ids.forEach(r_id -> result.put(r_id, voteRepository.countByDateAndRestaurantId(date, r_id)));
         return result;
     }
 

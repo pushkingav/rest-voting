@@ -1,4 +1,4 @@
-GET http://localhost:18080/restvoting/rest/votes/2019-01-11
+GET http://localhost:18080/restvoting/rest/votes/2019-01-18
 Accept: */*
 Content-Type: application/json
 Cache-Control: no-cache

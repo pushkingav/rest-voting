@@ -8,7 +8,7 @@ import java.util.List;
 
 import static ru.restaurants.restvoting.web.json.JacksonObjectMapper.getMapper;
 
-
+//TODO - find why curl commands does not work with russian charset in request body. UTF-8 problem.
 public class JsonUtil {
 
     public static <T> List<T> readValues(String json, Class<T> clazz) {

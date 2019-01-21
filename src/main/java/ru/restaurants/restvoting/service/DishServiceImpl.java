@@ -9,6 +9,7 @@ import ru.restaurants.restvoting.repository.RestaurantRepository;
 import ru.restaurants.restvoting.repository.VoteRepository;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -73,6 +74,11 @@ public class DishServiceImpl implements DishService {
     @Override
     public List<Dish> getAllByRestaurantId(int restaurantId) {
         return dishRepository.findAllByRestaurantId(restaurantId);
+    }
+
+    @Override
+    public List<Dish> getAllByRestaurantIdAndDate(int restaurantId, LocalDate date) {
+        return dishRepository.findAllByRestaurantIdAndDate(restaurantId, date);
     }
 
     @Override

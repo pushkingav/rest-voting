@@ -1,22 +1,22 @@
 package ru.restaurants.restvoting.to;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class DishTo {
     private String description;
     private BigDecimal price;
-    private LocalDateTime dateTime;
+    private LocalDate date;
     private Integer restaurant_id;
 
     public DishTo() {
     }
 
-    public DishTo(String description, BigDecimal price, LocalDateTime dateTime, Integer restaurant_id) {
+    public DishTo(String description, BigDecimal price, LocalDate date, Integer restaurant_id) {
         this.description = description;
         this.price = price;
-        this.dateTime = dateTime;
+        this.date = date;
         this.restaurant_id = restaurant_id;
     }
 
@@ -36,12 +36,12 @@ public class DishTo {
         this.price = price;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public Integer getRestaurant_id() {
@@ -59,12 +59,12 @@ public class DishTo {
         DishTo dishTo = (DishTo) o;
         return description.equals(dishTo.description) &&
                 price.equals(dishTo.price) &&
-                dateTime.equals(dishTo.dateTime) &&
+                date.equals(dishTo.date) &&
                 restaurant_id.equals(dishTo.restaurant_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(description, price, dateTime, restaurant_id);
+        return Objects.hash(description, price, date, restaurant_id);
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.restaurants.restvoting.model.Dish;
 
+import java.time.LocalDate;
 import java.util.List;
 
 //Proxy!
@@ -22,4 +23,6 @@ public interface CrudDishRepository extends JpaRepository<Dish, Integer> {
     List<Dish> findAll();
 
     List<Dish> findAllByRestaurantId(Integer restaurantId);
+
+    List<Dish> findAllByRestaurantIdAndDate(Integer restaurantId, LocalDate date);
 }

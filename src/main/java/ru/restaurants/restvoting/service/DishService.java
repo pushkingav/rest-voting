@@ -4,6 +4,7 @@ import ru.restaurants.restvoting.model.Dish;
 import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface DishService {
@@ -22,6 +23,8 @@ public interface DishService {
     void addDishes(List<Dish> dishes, Integer restaurantId);
 
     List<Dish> getAllByRestaurantId(int restaurantId);
+
+    List<Dish> getAllByRestaurantIdAndDate(int restaurantId, LocalDate date);
 
     List <Dish> getAll();
 }

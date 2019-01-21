@@ -2,6 +2,7 @@ package ru.restaurants.restvoting.repository;
 
 import ru.restaurants.restvoting.model.Dish;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface DishRepository {
@@ -14,4 +15,6 @@ public interface DishRepository {
     List<Dish> findAll();
 
     List<Dish> findAllByRestaurantId(Integer restaurantId);
+
+    List<Dish> findAllByRestaurantIdAndDate(Integer restaurantId, LocalDate date);
 }

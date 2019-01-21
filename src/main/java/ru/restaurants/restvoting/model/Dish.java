@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -23,9 +23,8 @@ public class Dish extends AbstractBaseEntity {
     /**
      *  A date when this dish have been added to the menu
      *  */
-    @Column(name = "date_time", nullable = false)
-    @NotNull
-    private LocalDateTime dateTime;
+    @Column(name = "date", nullable = false)
+    private LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "restaurant_id", nullable = false)
@@ -36,11 +35,11 @@ public class Dish extends AbstractBaseEntity {
     public Dish() {
     }
 
-    public Dish(Integer id, String description, BigDecimal price, LocalDateTime dateTime) {
+    public Dish(Integer id, String description, BigDecimal price, LocalDate date) {
         super(id);
         this.description = description;
         this.price = price;
-        this.dateTime = dateTime;
+        this.date = date;
     }
 
     public String getDescription() {
@@ -59,12 +58,12 @@ public class Dish extends AbstractBaseEntity {
         this.price = price;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDate dateTime) {
+        this.date = dateTime;
     }
 
     public Restaurant getRestaurant() {
@@ -80,7 +79,7 @@ public class Dish extends AbstractBaseEntity {
         return "Dish{" + "id=" + id +
                 " description='" + description + '\'' +
                 ", price=" + price +
-                ", dateTime=" + dateTime + '}';
+                ", dateTime=" + date + '}';
     }
 
     @Override
@@ -91,11 +90,11 @@ public class Dish extends AbstractBaseEntity {
         Dish dish = (Dish) o;
         return description.equals(dish.description) &&
                 price.equals(dish.price) &&
-                dateTime.equals(dish.dateTime);
+                date.equals(dish.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), description, price, dateTime);
+        return Objects.hash(super.hashCode(), description, price, date);
     }
 }

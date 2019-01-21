@@ -3,7 +3,7 @@ Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
-{"dateTime":"2018-12-15T09:00","description":"Котлета","price":100.00}
+{"date":"2018-12-15T09:00","description":"Котлета","price":100.00}
 
 <> 2018-12-25T101816.500.html
 <> 2018-12-25T101337.500.html

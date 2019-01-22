@@ -23,6 +23,7 @@ public class DataJpaVoteRepositoryImpl implements VoteRepository {
         if (user != null) {
             vote.setUser(user);
         }
+
         return crudVoteRepository.save(vote);
     }
 
@@ -33,5 +34,10 @@ public class DataJpaVoteRepositoryImpl implements VoteRepository {
 
     public Integer countByDateAndRestaurantId(LocalDate date, int restaurantId) {
         return crudVoteRepository.countByDateAndRestaurantId(date, restaurantId);
+    }
+
+    @Override
+    public Vote getByUserIdAndDate(LocalDate date, int userId) {
+        return crudVoteRepository.getByDateAndUserId(date, userId);
     }
 }

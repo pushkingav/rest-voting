@@ -7,4 +7,6 @@ import java.time.LocalDate;
 
 public interface CrudVoteRepository extends JpaRepository<Vote, Integer> {
     Integer countByDateAndRestaurantId(LocalDate date, int restaurantId);
+
+    Vote getByDateAndUserId(LocalDate date, int userId);
 }

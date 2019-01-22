@@ -13,6 +13,5 @@ public interface VoteRepository {
 
     Integer countByDateAndRestaurantId(LocalDate date, int restaurantId);
 
-    //select count(USER_ID) from Votes where date_time is ...
-
+    Vote getByUserIdAndDate(LocalDate date, int userId);
 }

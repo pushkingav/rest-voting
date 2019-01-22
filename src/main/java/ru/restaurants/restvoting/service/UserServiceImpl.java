@@ -13,12 +13,14 @@ import ru.restaurants.restvoting.model.Vote;
 import ru.restaurants.restvoting.repository.RestaurantRepository;
 import ru.restaurants.restvoting.repository.UserRepository;
 import ru.restaurants.restvoting.repository.VoteRepository;
+import ru.restaurants.restvoting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service("userService")
@@ -50,10 +52,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         //Remember to run this app with option "-Duser.timezone=GMT" - to force date operations be in UTC timezone
         LocalDateTime localDateTime = LocalDateTime.now();
         if (localDateTime.getHour() >= 11) {
-            return false;
-            //TODO - Add a correct HTTP response here - it should throw a correct error that shows which constraints are violated
+            throw new NotFoundException("Your vote can't be changed after 11:00 UTC");
         }
-        Vote vote = new Vote();
+        try {
+            restaurantRepository.getById(restaurantId);
+        } catch (NoSuchElementException nse) {
+            throw new NotFoundException("No restaurant found with id " + restaurantId);
+        }
+        Vote vote = null;
+        try {
+            vote = voteRepository.getByUserIdAndDate(localDateTime.toLocalDate(), userId);
+        } catch (NoSuchElementException nse) {
+            // No vote with such date and user - it's ok, we will create a new one!
+            nse.printStackTrace();
+        }
+        if (vote == null) {
+            vote = new Vote();
+        }
         vote.setDate(localDateTime.toLocalDate());
         vote.setRestaurantId(restaurantId);
         return (voteRepository.saveOrUpdate(vote, userId)) != null;

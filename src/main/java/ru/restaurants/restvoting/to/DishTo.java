@@ -8,16 +8,16 @@ public class DishTo {
     private String description;
     private BigDecimal price;
     private LocalDate date;
-    private Integer restaurant_id;
+    private Integer restaurantId;
 
     public DishTo() {
     }
 
-    public DishTo(String description, BigDecimal price, LocalDate date, Integer restaurant_id) {
+    public DishTo(String description, BigDecimal price, LocalDate date, Integer restaurantId) {
         this.description = description;
         this.price = price;
         this.date = date;
-        this.restaurant_id = restaurant_id;
+        this.restaurantId = restaurantId;
     }
 
     public String getDescription() {
@@ -44,12 +44,12 @@ public class DishTo {
         this.date = date;
     }
 
-    public Integer getRestaurant_id() {
-        return restaurant_id;
+    public Integer getRestaurantId() {
+        return restaurantId;
     }
 
-    public void setRestaurant_id(Integer restaurant_id) {
-        this.restaurant_id = restaurant_id;
+    public void setRestaurantId(Integer restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
     @Override
@@ -60,11 +60,11 @@ public class DishTo {
         return description.equals(dishTo.description) &&
                 price.equals(dishTo.price) &&
                 date.equals(dishTo.date) &&
-                restaurant_id.equals(dishTo.restaurant_id);
+                restaurantId.equals(dishTo.restaurantId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(description, price, date, restaurant_id);
+        return Objects.hash(description, price, date, restaurantId);
     }
 }

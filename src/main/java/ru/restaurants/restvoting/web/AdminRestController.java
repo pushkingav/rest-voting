@@ -9,6 +9,7 @@ import ru.restaurants.restvoting.model.Dish;
 import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.service.DishService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class AdminRestController {
     private DishService dishService;
 
     @PostMapping(value = "/restaurants/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> addRestaurant(@RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> addRestaurant(@Valid @RequestBody Restaurant restaurant) {
         Restaurant created = dishService.addRestaurant(restaurant, null);
         if (created != null) {
             return ResponseEntity.ok(created);
@@ -28,15 +29,16 @@ public class AdminRestController {
         return ResponseEntity.unprocessableEntity().build();
     }
 
-    @PostMapping(value = "/dishes/add/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/dishes/add/{restaurant_id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces =
+            MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addDish(@RequestBody Dish dish, @PathVariable("id") Integer restaurant_id) {
-        dishService.create(dish, restaurant_id);
+    public void addDish(@Valid @RequestBody Dish dish, @PathVariable("restaurant_id") Integer restaurantId) {
+        dishService.create(dish, restaurantId);
     }
 
     @PostMapping(value = "/dishes/add/many/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addManyDishes(@RequestBody List<Dish> dishes, @PathVariable Integer id) {
+    public void addManyDishes(@Valid @RequestBody List<Dish> dishes, @PathVariable Integer id) {
         dishService.addDishes(dishes, id);
     }
 }

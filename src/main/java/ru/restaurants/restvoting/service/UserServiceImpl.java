@@ -14,6 +14,7 @@ import ru.restaurants.restvoting.repository.RestaurantRepository;
 import ru.restaurants.restvoting.repository.UserRepository;
 import ru.restaurants.restvoting.repository.VoteRepository;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
+import ru.restaurants.restvoting.util.exception.TooLateForVoteException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -51,9 +52,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public boolean vote(int restaurantId, int userId) {
         //Remember to run this app with option "-Duser.timezone=GMT" - to force date operations be in UTC timezone
         LocalDateTime localDateTime = LocalDateTime.now();
-        if (localDateTime.getHour() >= 11) {
-            throw new NotFoundException("Your vote can't be changed after 11:00 UTC");
-        }
         try {
             restaurantRepository.getById(restaurantId);
         } catch (NoSuchElementException nse) {
@@ -68,6 +66,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         if (vote == null) {
             vote = new Vote();
+        } else {
+            if (localDateTime.getHour() >= 11) {
+                throw new TooLateForVoteException("Your vote can't be changed after 11:00 UTC");
+            }
         }
         vote.setDate(localDateTime.toLocalDate());
         vote.setRestaurantId(restaurantId);

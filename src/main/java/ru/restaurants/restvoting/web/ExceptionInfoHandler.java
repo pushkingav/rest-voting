@@ -15,6 +15,7 @@ import ru.restaurants.restvoting.util.ValidationUtil;
 import ru.restaurants.restvoting.util.exception.ErrorInfo;
 import ru.restaurants.restvoting.util.exception.ErrorType;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
+import ru.restaurants.restvoting.util.exception.TooLateForVoteException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,6 +31,12 @@ public class ExceptionInfoHandler {
     @ExceptionHandler(NotFoundException.class)
     public ErrorInfo handleError(HttpServletRequest req, NotFoundException e) {
         return logAndGetErrorInfo(req, e,true, DATA_NOT_FOUND);
+    }
+
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(TooLateForVoteException.class)
+    public ErrorInfo handleTooLateForVoteError(HttpServletRequest req, TooLateForVoteException e) {
+        return logAndGetErrorInfo(req, e,true, VALIDATION_ERROR);
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class})

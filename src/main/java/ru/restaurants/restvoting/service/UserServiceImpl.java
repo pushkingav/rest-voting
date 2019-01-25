@@ -80,8 +80,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public Map<Integer, Integer> getVotesForDate(LocalDate date) {
         List<Integer> restaurant_ids = restaurantRepository.getAll()
                 .stream().map(AbstractBaseEntity::getId).collect(Collectors.toList());
-        Map<Integer, Integer> result = new HashMap<>();
-        restaurant_ids.forEach(r_id -> result.put(r_id, voteRepository.countByDateAndRestaurantId(date, r_id)));
+        Map<Integer, Integer> rawResult = new HashMap<>();
+        restaurant_ids.forEach(r_id -> rawResult.put(r_id, voteRepository.countByDateAndRestaurantId(date, r_id)));
+        //Sorting map by values (order by votes count desc)
+        HashMap<Integer, Integer> result = rawResult.entrySet().stream().sorted(Map.Entry.comparingByValue())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, HashMap::new)
+                );
         return result;
     }
 

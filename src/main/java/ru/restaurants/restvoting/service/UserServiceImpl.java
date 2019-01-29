@@ -83,7 +83,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Map<Integer, Integer> rawResult = new HashMap<>();
         restaurant_ids.forEach(r_id -> rawResult.put(r_id, voteRepository.countByDateAndRestaurantId(date, r_id)));
         //Sorting map by values (order by votes count desc)
-        HashMap<Integer, Integer> result = rawResult.entrySet().stream().sorted(Map.Entry.comparingByValue())
+        Map<Integer, Integer> result = rawResult.entrySet().stream().sorted(Map.Entry.comparingByValue((o2, o1) -> {
+            if (o2 > o1) {
+                return 1;
+            } else {
+                if (o2 < o1) {
+                    return -1;
+                }
+            }
+            return 0;
+        }))
                 .collect(Collectors.toMap(
                         Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, HashMap::new)
                 );

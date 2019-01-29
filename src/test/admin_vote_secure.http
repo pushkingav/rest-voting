@@ -1,4 +1,4 @@
-POST http://localhost:18080/restvoting/rest/votes/100003
+POST http://localhost:18080/restvoting/rest/votes/100004
 Accept: */*
 Content-Type: application/json
 Cache-Control: no-cache

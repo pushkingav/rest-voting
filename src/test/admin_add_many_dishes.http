@@ -1,11 +1,11 @@
-POST http://localhost:18080/restvoting/rest/admin/dishes/add/many/100014
+POST http://localhost:18080/restvoting/rest/admin/dishes/add/many/100003
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
 
-[{"date":"2018-12-15T09:00","description":"Рубленая Котлета","price":"abc"}, {"date":"2018-12-15T09:00",
-  "description":"Солянка1","price":"ert"}]
+[{"date":"2018-12-15","description":"Рубленая Котлета","price":"100"}, {"date":"2018-12-15",
+  "description":"Солянка1","price":"200"}]
 
 ###
 

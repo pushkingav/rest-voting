@@ -1,13 +1,20 @@
 package ru.restaurants.restvoting.to;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class DishTo {
+    @NotNull
     private String description;
+    
+    @NotNull
     private BigDecimal price;
+    
+    @NotNull
     private LocalDate date;
+    
     private Integer restaurantId;
 
     public DishTo() {

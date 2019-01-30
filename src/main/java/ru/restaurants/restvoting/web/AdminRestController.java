@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import ru.restaurants.restvoting.model.Dish;
 import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.service.DishService;
+import ru.restaurants.restvoting.to.DishTo;
+import ru.restaurants.restvoting.util.DishUtil;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = AdminRestController.ADMIN_REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -29,16 +32,18 @@ public class AdminRestController {
         return ResponseEntity.unprocessableEntity().build();
     }
 
-    @PostMapping(value = "/dishes/add/{restaurant_id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces =
+    @PostMapping(value = "/dishes/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces =
             MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addDish(@Valid @RequestBody Dish dish, @PathVariable("restaurant_id") Integer restaurantId) {
-        dishService.create(dish, restaurantId);
+    public void addDish(@Valid @RequestBody DishTo dishTo) {
+        dishService.create(DishUtil.createFromTo(dishTo), dishTo.getRestaurantId());
     }
 
-    @PostMapping(value = "/dishes/add/many/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/dishes/add/many/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces =
+            MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addManyDishes(@Valid @RequestBody List<Dish> dishes, @PathVariable Integer id) {
-        dishService.addDishes(dishes, id);
+    public void addManyDishes(@Valid @RequestBody List<DishTo> dishToList, @PathVariable Integer restaurantId) {
+        List<Dish> dishes = dishToList.stream().map(DishUtil::createFromTo).collect(Collectors.toList());
+        dishService.addDishes(dishes, restaurantId);
     }
 }

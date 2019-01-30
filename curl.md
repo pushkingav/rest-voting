@@ -5,8 +5,9 @@
 `curl -s -X POST -d '{"name":"Added Restaurant 1"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:18080/restvoting/rest/admin/restaurants/add --user admin@gmail.com:admin`
 
 #### Admin: add many dishes to restaurant's menu for some date
-`curl -s -X POST -d '[{"date":"2018-12-15T09:00","description":"Steak","price":100.00}, {"date":"2018-12-15T09:00", 
-"description":"Soup 2","price":155.00}]' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:18080/restvoting/rest/admin/dishes/add/many/100014 --user admin@gmail.com:admin`
+`curl -s -X POST -d '[{"date":"2018-12-15","description":"Steak","price":100.00}, {"date":"2018-12-15", 
+"description":"Soup 2","price":155.00}, {"restaurantId": 100003}]' -H 'Content-Type:application/json;charset=UTF-8' 
+http://localhost:18080/restvoting/rest/admin/dishes/add/many --user admin@gmail.com:admin`
 
 #### User: list all dishes by restaurantId
 `curl -s http://localhost:18080/restvoting/rest/dishes/100003 --user user@yandex.ru:password`

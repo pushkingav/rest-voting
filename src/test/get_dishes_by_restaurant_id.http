@@ -1,4 +1,4 @@
-GET http://localhost:18080/restvoting/rest/dishes/100003?date=2015-05-30
+GET http://localhost:18080/restvoting/rest/dishes/100003
 Accept: */*
 Cache-Control: no-cache
 Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu

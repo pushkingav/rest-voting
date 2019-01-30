@@ -46,12 +46,10 @@ CREATE UNIQUE INDEX dishes_unique_restaurant_name_idx
   ON dishes (restaurant_id, description);
 
 CREATE TABLE menu (
-  restaurant_id   INTEGER     NOT NULL,
   dish_id         INTEGER     NOT NULL,
-  date            DATE   NOT NULL,
-  FOREIGN KEY (restaurant_id) REFERENCES restaurants (id) ON DELETE CASCADE,
+  date            DATE        NOT NULL,
   FOREIGN KEY (dish_id) REFERENCES dishes (id) ON DELETE CASCADE,
-  CONSTRAINT restaurant_dish_date_idx UNIQUE (restaurant_id, dish_id, date)
+  CONSTRAINT dish_date_idx UNIQUE (dish_id, date)
 );
 
 CREATE TABLE votes

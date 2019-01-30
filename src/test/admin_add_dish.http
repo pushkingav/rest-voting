@@ -1,11 +1,11 @@
 # For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
-POST http://localhost:18080/restvoting/rest/admin/dishes/add/100003
+POST http://localhost:18080/restvoting/rest/admin/dishes/add
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
 
-{"date":"2018-12-15T09:00","description":"Рубленая Котлета","price":"abc"}
+{"date":"2019-01-30","description":"Рубленая Котлета","price":"100", "restaurantId": 100003}
 
 ###
 #

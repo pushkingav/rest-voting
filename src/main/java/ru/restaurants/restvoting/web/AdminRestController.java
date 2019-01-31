@@ -36,14 +36,14 @@ public class AdminRestController {
             MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addDish(@Valid @RequestBody DishTo dishTo) {
-        dishService.create(DishUtil.createFromTo(dishTo), dishTo.getRestaurantId());
+        dishService.create(DishUtil.createNewFromTo(dishTo), dishTo.getRestaurantId());
     }
 
     @PostMapping(value = "/dishes/add/many/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces =
             MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addManyDishes(@Valid @RequestBody List<DishTo> dishToList, @PathVariable Integer restaurantId) {
-        List<Dish> dishes = dishToList.stream().map(DishUtil::createFromTo).collect(Collectors.toList());
+        List<Dish> dishes = dishToList.stream().map(DishUtil::createNewFromTo).collect(Collectors.toList());
         dishService.addDishes(dishes, restaurantId);
     }
 }

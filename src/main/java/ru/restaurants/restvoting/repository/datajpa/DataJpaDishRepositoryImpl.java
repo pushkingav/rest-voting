@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.restaurants.restvoting.model.Dish;
 import ru.restaurants.restvoting.repository.DishRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -19,8 +18,7 @@ public class DataJpaDishRepositoryImpl implements DishRepository {
 
     @Override
     @Transactional
-    public Dish save(Dish dish, int restaurant_id) {
-        dish.setRestaurant(crudRestaurantRepository.getOne(restaurant_id));
+    public Dish save(Dish dish) {
         return crudDishRepository.save(dish);
     }
 
@@ -37,15 +35,5 @@ public class DataJpaDishRepositoryImpl implements DishRepository {
     @Override
     public List<Dish> findAll() {
         return crudDishRepository.findAll();
-    }
-
-    @Override
-    public List<Dish> findAllByRestaurantId(Integer restaurantId) {
-        return crudDishRepository.findAllByRestaurantId(restaurantId);
-    }
-
-    @Override
-    public List<Dish> findAllByRestaurantIdAndDate(Integer restaurantId, LocalDate date) {
-        return crudDishRepository.findAllByRestaurantIdAndDate(restaurantId, date);
     }
 }

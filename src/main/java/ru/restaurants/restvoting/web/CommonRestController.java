@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import ru.restaurants.restvoting.model.Dish;
+import ru.restaurants.restvoting.model.MenuItem;
 import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.service.DishService;
 
@@ -25,8 +25,8 @@ public class CommonRestController {
     }
 
     @GetMapping("/dishes/{restaurant_id}")
-    public List<Dish> getAll(@PathVariable("restaurant_id") Integer restaurantId,
-                             @RequestParam(value = "date", required = false) LocalDate date) {
+    public List<MenuItem> getAll(@PathVariable("restaurant_id") Integer restaurantId,
+                                 @RequestParam(value = "date", required = false) LocalDate date) {
         if (date == null) {
             return dishService.getAllByRestaurantId(restaurantId);
         }

@@ -15,11 +15,11 @@ public class Restaurant extends AbstractBaseEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnore
-    protected List<Dish> dishes;
+    protected List<MenuItem> menuItems;
 
-    public Restaurant(@NotBlank String name, List<Dish> dishes) {
+    public Restaurant(@NotBlank String name, List<MenuItem> menuItems) {
         this.name = name;
-        this.dishes = dishes;
+        this.menuItems = menuItems;
     }
 
     public Restaurant() {
@@ -33,12 +33,12 @@ public class Restaurant extends AbstractBaseEntity {
         this.name = name;
     }
 
-    public List<Dish> getDishes() {
-        return dishes;
+    public List<MenuItem> getMenuItems() {
+        return menuItems;
     }
 
-    public void setDishes(List<Dish> dishes) {
-        this.dishes = dishes;
+    public void setMenuItems(List<MenuItem> menuItems) {
+        this.menuItems = menuItems;
     }
 
     @Override

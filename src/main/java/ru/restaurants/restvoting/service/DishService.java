@@ -1,7 +1,9 @@
 package ru.restaurants.restvoting.service;
 
 import ru.restaurants.restvoting.model.Dish;
+import ru.restaurants.restvoting.model.MenuItem;
 import ru.restaurants.restvoting.model.Restaurant;
+import ru.restaurants.restvoting.to.DishTo;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -12,7 +14,9 @@ public interface DishService {
 
     List<Restaurant> listAllRestaurants();
 
-    Dish create(Dish dish, int restaurantId);
+    Dish create(Dish dish);
+
+    MenuItem createMenuItem(MenuItem menuItem, int restaurantId);
 
     Dish update(Dish dish, int restaurantId);
 
@@ -20,11 +24,11 @@ public interface DishService {
 
     void delete(int id) throws NotFoundException;
 
-    void addDishes(List<Dish> dishes, Integer restaurantId);
+    void addDishes(List<DishTo> dishToList, Integer restaurantId);
 
-    List<Dish> getAllByRestaurantId(int restaurantId);
+    List<MenuItem> getAllByRestaurantId(int restaurantId);
 
-    List<Dish> getAllByRestaurantIdAndDate(int restaurantId, LocalDate date);
+    List<MenuItem> getAllByRestaurantIdAndDate(int restaurantId, LocalDate date);
 
-    List <Dish> getAll();
+    List <MenuItem> getAll();
 }

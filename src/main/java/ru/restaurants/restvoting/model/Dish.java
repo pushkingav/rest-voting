@@ -13,7 +13,7 @@ public class Dish extends AbstractBaseEntity {
     @NotBlank
     protected String description;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "dish")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnore
     protected List<MenuItem> menuItems;
 

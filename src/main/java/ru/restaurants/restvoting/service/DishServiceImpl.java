@@ -3,10 +3,13 @@ package ru.restaurants.restvoting.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.restaurants.restvoting.model.Dish;
+import ru.restaurants.restvoting.model.MenuItem;
 import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.repository.DishRepository;
+import ru.restaurants.restvoting.repository.MenuItemRepository;
 import ru.restaurants.restvoting.repository.RestaurantRepository;
-import ru.restaurants.restvoting.repository.VoteRepository;
+import ru.restaurants.restvoting.to.DishTo;
+import ru.restaurants.restvoting.util.DishUtil;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -18,14 +21,10 @@ public class DishServiceImpl implements DishService {
     private RestaurantRepository restaurantRepository;
 
     @Autowired
-    private VoteRepository voteRepository;
-
-    private final DishRepository dishRepository;
+    private DishRepository dishRepository;
 
     @Autowired
-    public DishServiceImpl(DishRepository repository) {
-        this.dishRepository = repository;
-    }
+    private MenuItemRepository menuItemRepository;
 
     @Override
     public Restaurant addRestaurant(Restaurant restaurant, Integer id) {
@@ -42,19 +41,33 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public Dish create(Dish dish, int restaurant_id) {
-        return dishRepository.save(dish, restaurant_id);
+    public Dish create(Dish dish) {
+        return dishRepository.save(dish);
     }
 
     @Override
-    public void addDishes(List<Dish> dishes, Integer restaurantId) {
-        //TODO - add logic for handling wrong restaurantIds
-        dishes.forEach(dish -> dishRepository.save(dish, restaurantId));
+    public MenuItem createMenuItem(MenuItem menuItem, int restaurantId) {
+        return menuItem;
+    }
+
+    @Override
+    public void addDishes(List<DishTo> dishesTos, Integer restaurantId) {
+        Restaurant restaurant = restaurantRepository.getById(restaurantId);
+        if (restaurant == null) {
+            throw new NotFoundException("No restaurant found with id = " + restaurantId);
+        }
+        for (DishTo dishTo: dishesTos) {
+            Dish dish = create(DishUtil.createNewDishFromTo(dishTo));
+            MenuItem menuItem = DishUtil.createNewMenuItemFromTo(dishTo);
+            menuItem.setDish(dish);
+            menuItem.setRestaurant(restaurant);
+            menuItemRepository.save(menuItem);
+        }
     }
 
     @Override
     public Dish update(Dish dish, int restaurant_id) {
-        return dishRepository.save(dish, restaurant_id);
+        return dishRepository.save(dish);
     }
 
     @Override
@@ -72,18 +85,18 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public List<Dish> getAllByRestaurantId(int restaurantId) {
-        return dishRepository.findAllByRestaurantId(restaurantId);
+    public List<MenuItem> getAllByRestaurantId(int restaurantId) {
+        return menuItemRepository.findAllByRestaurantId(restaurantId);
     }
 
     @Override
-    public List<Dish> getAllByRestaurantIdAndDate(int restaurantId, LocalDate date) {
-        return dishRepository.findAllByRestaurantIdAndDate(restaurantId, date);
+    public List<MenuItem> getAllByRestaurantIdAndDate(int restaurantId, LocalDate date) {
+        return menuItemRepository.findAllByRestaurantIdAndDate(restaurantId, date);
     }
 
     @Override
-    public List<Dish> getAll() {
-        return dishRepository.findAll();
+    public List<MenuItem> getAll() {
+        return menuItemRepository.findAll();
     }
 
 

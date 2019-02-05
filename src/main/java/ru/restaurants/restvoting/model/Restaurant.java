@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
-
+//TODO - https://stackoverflow.com/questions/13370221/jpa-hibernate-detached-entity-passed-to-persist
 @Entity
 @Table(name="restaurants")
 public class Restaurant extends AbstractBaseEntity {

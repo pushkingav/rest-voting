@@ -26,7 +26,7 @@ public class MenuItem extends AbstractBaseEntity {
     @JsonIgnore
     protected Restaurant restaurant;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "dish_id", nullable = false)
     @NotNull
     protected Dish dish;

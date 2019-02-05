@@ -13,7 +13,7 @@ public class Dish extends AbstractBaseEntity {
     @NotBlank
     protected String description;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "dish")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "dish", cascade = CascadeType.MERGE)
     @JsonIgnore
     protected List<MenuItem> menuItems;
 
@@ -31,6 +31,18 @@ public class Dish extends AbstractBaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<MenuItem> getMenuItems() {
+        return menuItems;
+    }
+
+    public void setMenuItems(List<MenuItem> menuItems) {
+        if (this.menuItems.size() > 0) {
+            this.menuItems.addAll(menuItems);
+        } else {
+            this.menuItems = menuItems;
+        }
     }
 
     @Override

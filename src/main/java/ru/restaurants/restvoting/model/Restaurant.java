@@ -13,7 +13,7 @@ public class Restaurant extends AbstractBaseEntity {
     @NotBlank
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant", cascade = CascadeType.MERGE)//orphanRemoval = true
     @JsonIgnore
     protected List<MenuItem> menuItems;
 

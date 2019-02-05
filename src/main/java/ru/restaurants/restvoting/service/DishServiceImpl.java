@@ -57,6 +57,7 @@ public class DishServiceImpl implements DishService {
             throw new NotFoundException("No restaurant found with id = " + restaurantId);
         }
         for (DishTo dishTo: dishesTos) {
+            //TODO - try to get a Dish from db before creating a new one!
             Dish dish = create(DishUtil.createNewDishFromTo(dishTo));
             MenuItem menuItem = DishUtil.createNewMenuItemFromTo(dishTo);
             menuItem.setDish(dish);

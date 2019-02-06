@@ -2,6 +2,7 @@ package ru.restaurants.restvoting.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.restaurants.restvoting.model.Dish;
 import ru.restaurants.restvoting.model.MenuItem;
 import ru.restaurants.restvoting.model.Restaurant;
@@ -51,7 +52,9 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
+    @Transactional
     public void addDishes(List<DishTo> dishesTos, Integer restaurantId) {
+        //TODO - find how to avoid db requests in the loop!
         Restaurant restaurant = restaurantRepository.getById(restaurantId);
         if (restaurant == null) {
             throw new NotFoundException("No restaurant found with id = " + restaurantId);

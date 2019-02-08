@@ -55,6 +55,7 @@ public class DishServiceImpl implements DishService {
     @Transactional
     public void addDishes(List<DishTo> dishesTos, Integer restaurantId) {
         //TODO - find how to avoid db requests in the loop!
+        //TODO - add cache!
         Restaurant restaurant = restaurantRepository.getById(restaurantId);
         if (restaurant == null) {
             throw new NotFoundException("No restaurant found with id = " + restaurantId);

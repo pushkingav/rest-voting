@@ -33,7 +33,7 @@ public class CommonRestController {
         return dishService.getAllByRestaurantIdAndDate(restaurantId, date);
     }
 
-    @GetMapping("/restaurants/list")
+    @GetMapping("/restaurants")
     public List<Restaurant> getAllRestaurants() {
         return dishService.listAllRestaurants();
     }

@@ -11,5 +11,7 @@ public interface DishRepository {
 
     Dish findById(Integer id);
 
+    Dish findByDescription(String description);
+
     List<Dish> findAll();
 }

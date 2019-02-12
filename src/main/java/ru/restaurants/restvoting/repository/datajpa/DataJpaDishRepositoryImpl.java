@@ -33,6 +33,11 @@ public class DataJpaDishRepositoryImpl implements DishRepository {
     }
 
     @Override
+    public Dish findByDescription(String description) {
+        return crudDishRepository.findByDescription(description);
+    }
+
+    @Override
     public List<Dish> findAll() {
         return crudDishRepository.findAll();
     }

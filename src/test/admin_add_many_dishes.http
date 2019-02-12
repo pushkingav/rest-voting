@@ -4,7 +4,7 @@ Cache-Control: no-cache
 Content-Type: application/json
 Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
 
-[{"date":"2018-12-15","description":"Рубленая Котлета","price":"100"}, {"date":"2018-12-15",
-  "description":"Солянка1","price":"200"}]
+[{"date":"2018-12-15","description":"Овсянка","price":"70"}, {"date":"2018-12-15","description":"Рубленая Котлета",
+  "price":"100"}, {"date":"2018-12-15", "description":"Солянка1","price":"200"}]
 
 ###

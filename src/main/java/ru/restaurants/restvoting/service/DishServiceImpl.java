@@ -54,14 +54,15 @@ public class DishServiceImpl implements DishService {
     @Override
     @Transactional
     public void addDishes(List<DishTo> dishesTos, Integer restaurantId) {
-        //TODO - find how to avoid db requests in the loop!
         //TODO - add cache!
         Restaurant restaurant = restaurantRepository.getById(restaurantId);
         if (restaurant == null) {
             throw new NotFoundException("No restaurant found with id = " + restaurantId);
         }
+        //TODO - this "select" MUST be cached!
+        List<Dish> dishes = dishRepository.findAll();
         for (DishTo dishTo: dishesTos) {
-            Dish dish = dishRepository.findByDescription(dishTo.getDescription());
+            Dish dish = dishes.stream().filter(d -> dishTo.getDescription().equals(d.getDescription())).findFirst().orElse(null);
             if (dish == null) {
                 dish = create(DishUtil.createNewDishFromTo(dishTo));
             }

@@ -1,6 +1,7 @@
 package ru.restaurants.restvoting.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,7 +18,7 @@ import ru.restaurants.restvoting.util.exception.NotFoundException;
 import ru.restaurants.restvoting.util.exception.TooLateForVoteException;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private UserRepository userRepository;
     @Autowired
     private VoteRepository voteRepository;
+
+    @Value("#{T(java.time.LocalTime).parse('${last.voting.time}')}")
+    private LocalTime lastVotingTime;
 
     @Override
     public Integer addRestaurant(String name) {
@@ -51,7 +55,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public boolean vote(int restaurantId, int userId) {
         //Remember to run this app with option "-Duser.timezone=GMT" - to force date operations be in UTC timezone
-        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalTime localTime = LocalTime.now();
+
         try {
             restaurantRepository.getById(restaurantId);
         } catch (NoSuchElementException nse) {
@@ -59,7 +64,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         Vote vote = null;
         try {
-            vote = voteRepository.getByUserIdAndDate(localDateTime.toLocalDate(), userId);
+            vote = voteRepository.getByUserIdAndDate(LocalDate.now(), userId);
         } catch (NoSuchElementException nse) {
             // No vote with such date and user - it's ok, we will create a new one!
             nse.printStackTrace();
@@ -67,11 +72,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (vote == null) {
             vote = new Vote();
         } else {
-            if (localDateTime.getHour() >= 11) {
+            if (localTime.isAfter(lastVotingTime)) {
                 throw new TooLateForVoteException("Your vote can't be changed after 11:00 UTC");
             }
         }
-        vote.setDate(localDateTime.toLocalDate());
+        vote.setDate(LocalDate.now());
         vote.setRestaurantId(restaurantId);
         return (voteRepository.saveOrUpdate(vote, userId)) != null;
     }

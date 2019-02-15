@@ -20,3 +20,8 @@ It should contain the code and README.md with API documentation and curl command
 P.S.: Make sure everything works with latest version that is on github :)
 
 P.P.S.: Assume that your API will be used by a frontend developer to build frontend on top of that.
+
+
+**Developer's remarks**
+* Last voting time is set in the `src\main\resources\application.properties`.
+* Last voting time is given in UTC and is proceeded in UTC. 

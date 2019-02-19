@@ -1,4 +1,4 @@
-GET http://localhost:18080/restvoting/rest/restaurants/list
+GET http://localhost:18080/restvoting/rest/restaurants
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json

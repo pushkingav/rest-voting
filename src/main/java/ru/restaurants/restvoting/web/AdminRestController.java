@@ -5,15 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.restaurants.restvoting.model.Dish;
 import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.service.DishService;
 import ru.restaurants.restvoting.to.DishTo;
-import ru.restaurants.restvoting.util.DishUtil;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = AdminRestController.ADMIN_REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -23,7 +20,7 @@ public class AdminRestController {
     @Autowired
     private DishService dishService;
 
-    @PostMapping(value = "/restaurants/add", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/restaurants", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> addRestaurant(@Valid @RequestBody Restaurant restaurant) {
         Restaurant created = dishService.addRestaurant(restaurant, null);
         if (created != null) {
@@ -32,18 +29,10 @@ public class AdminRestController {
         return ResponseEntity.unprocessableEntity().build();
     }
 
-    @PostMapping(value = "/dishes/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces =
-            MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addDish(@Valid @RequestBody DishTo dishTo) {
-        dishService.create(DishUtil.createNewFromTo(dishTo), dishTo.getRestaurantId());
-    }
-
-    @PostMapping(value = "/dishes/add/many/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces =
+    @PostMapping(value = "/dishes/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces =
             MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addManyDishes(@Valid @RequestBody List<DishTo> dishToList, @PathVariable Integer restaurantId) {
-        List<Dish> dishes = dishToList.stream().map(DishUtil::createNewFromTo).collect(Collectors.toList());
-        dishService.addDishes(dishes, restaurantId);
+        dishService.addDishes(dishToList, restaurantId);
     }
 }

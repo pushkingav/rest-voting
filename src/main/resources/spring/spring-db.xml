@@ -12,7 +12,7 @@
        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
+    <!--<context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>-->
     <context:component-scan base-package="ru.restaurants.**.repository"/>
     <jpa:repositories base-package="ru.restaurants.**.repository.datajpa"/>
 
@@ -41,6 +41,12 @@
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).FORMAT_SQL}" value="${hibernate.format_sql}"/>
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}"
                        value="${hibernate.use_sql_comments}"/>
+                <entry key="#{T(org.hibernate.cfg.AvailableSettings).STATEMENT_BATCH_SIZE}"
+                       value="${hibernate.batch.size}"/>
+                <entry key="#{T(org.hibernate.cfg.AvailableSettings).ORDER_INSERTS}"
+                       value="true"/>
+                <entry key="#{T(org.hibernate.cfg.AvailableSettings).ORDER_UPDATES}"
+                       value="true"/>
                 <!--<entry key="#{T(org.hibernate.cfg.AvailableSettings).CACHE_REGION_FACTORY}"
                        value="org.hibernate.cache.jcache.internal.JCacheRegionFactory"/>
                 <entry key="#{T(org.hibernate.cache.jcache.ConfigSettings).PROVIDER}"

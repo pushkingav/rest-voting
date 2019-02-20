@@ -19,10 +19,7 @@ import ru.restaurants.restvoting.util.exception.TooLateForVoteException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service("userService")
@@ -43,7 +40,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Restaurant getRestaurantById(Integer id) {
+    public Optional<Restaurant> getRestaurantById(Integer id) {
         return restaurantRepository.getById(id);
     }
 
@@ -56,10 +53,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public boolean vote(int restaurantId, int userId) {
         //Remember to run this app with option "-Duser.timezone=GMT" - to force date operations be in UTC timezone
         LocalTime localTime = LocalTime.now();
-
-        try {
-            restaurantRepository.getById(restaurantId);
-        } catch (NoSuchElementException nse) {
+        Optional<Restaurant> restaurantOptional = restaurantRepository.getById(restaurantId);
+        if (restaurantOptional.isEmpty()) {
             throw new NotFoundException("No restaurant found with id " + restaurantId);
         }
         Vote vote = null;

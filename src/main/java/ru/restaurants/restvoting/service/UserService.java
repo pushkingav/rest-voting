@@ -5,6 +5,7 @@ import ru.restaurants.restvoting.model.Restaurant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface UserService {
     //Admin tasks
@@ -12,7 +13,7 @@ public interface UserService {
 
     List<Restaurant> getRestaurants();
 
-    Restaurant getRestaurantById(Integer id);
+    Optional<Restaurant> getRestaurantById(Integer id);
 
     boolean vote(int restaurantId, int userId);
 

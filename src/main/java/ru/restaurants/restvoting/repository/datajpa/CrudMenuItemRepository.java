@@ -6,7 +6,7 @@ import ru.restaurants.restvoting.model.MenuItem;
 
 import java.time.LocalDate;
 import java.util.List;
-
+//TODO - remove all CRUD repos and fix Spring context!
 //Proxy!
 @Transactional(readOnly = true)
 public interface CrudMenuItemRepository extends JpaRepository<MenuItem, Integer> {

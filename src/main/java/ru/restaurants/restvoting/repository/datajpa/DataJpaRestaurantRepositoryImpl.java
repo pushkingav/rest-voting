@@ -23,8 +23,8 @@ public class DataJpaRestaurantRepositoryImpl implements RestaurantRepository {
 
     @Override
     @Transactional
-    public Restaurant getById(Integer id) {
-        return crudRestaurantRepository.findById(id).get();
+    public Optional<Restaurant> getById(Integer id) {
+        return crudRestaurantRepository.findById(id);
     }
 
     @Override

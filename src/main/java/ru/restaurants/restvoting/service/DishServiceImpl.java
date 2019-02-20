@@ -15,6 +15,7 @@ import ru.restaurants.restvoting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DishServiceImpl implements DishService {
@@ -55,8 +56,8 @@ public class DishServiceImpl implements DishService {
     @Transactional
     public void addDishes(List<DishTo> dishesTos, Integer restaurantId) {
         //TODO - add cache!
-        Restaurant restaurant = restaurantRepository.getById(restaurantId);
-        if (restaurant == null) {
+        Optional<Restaurant> restaurant = restaurantRepository.getById(restaurantId);
+        if (restaurant.isEmpty()) {
             throw new NotFoundException("No restaurant found with id = " + restaurantId);
         }
         //TODO - this "select" MUST be cached!
@@ -68,7 +69,7 @@ public class DishServiceImpl implements DishService {
             }
             MenuItem menuItem = DishUtil.createNewMenuItemFromTo(dishTo);
             menuItem.setDish(dish);
-            menuItem.setRestaurant(restaurant);
+            menuItem.setRestaurant(restaurant.get());
             menuItemRepository.save(menuItem);
         }
     }
@@ -80,11 +81,11 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public Dish get(int id) throws NotFoundException {
-        Dish result = dishRepository.findById(id);
-        if (result == null) {
+        Optional<Dish> result = dishRepository.findById(id);
+        if (result.isEmpty()) {
             throw new NotFoundException("Not found Dish with id = " + id);
         }
-        return result;
+        return result.get();
     }
 
     @Override

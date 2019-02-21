@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.restaurants.restvoting.service.UserService;
 import ru.restaurants.restvoting.util.SecurityUtil;
 
-import java.time.LocalDate;
 import java.util.Map;
 
 @ComponentScan
@@ -19,9 +18,9 @@ public class VoteRestController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/{date}")
-    public Map<Integer, Integer> getVotesForDate(@PathVariable("date") LocalDate localDate) {
-        return userService.getVotesForDate(localDate);
+    @GetMapping("/today")
+    public Map<Integer, Integer> getVotesForToday() {
+        return userService.getVotesForToday();
     }
 
     @PostMapping("/{restaurant_id}")

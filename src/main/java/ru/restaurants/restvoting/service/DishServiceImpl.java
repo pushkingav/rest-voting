@@ -30,16 +30,11 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public Restaurant addRestaurant(Restaurant restaurant, Integer id) {
-        Restaurant checked = restaurantRepository.getByName(restaurant.getName());
-        if (checked != null) {
+        Optional<Restaurant> checked = restaurantRepository.findByName(restaurant.getName());
+        if (checked.isEmpty()) {
             return null;
         }
-        return restaurantRepository.add(restaurant);
-    }
-
-    @Override
-    public List<Restaurant> listAllRestaurants() {
-        return restaurantRepository.getAll();
+        return restaurantRepository.save(restaurant);
     }
 
     @Override
@@ -56,7 +51,7 @@ public class DishServiceImpl implements DishService {
     @Transactional
     public void addDishes(List<DishTo> dishesTos, Integer restaurantId) {
         //TODO - add cache!
-        Optional<Restaurant> restaurant = restaurantRepository.getById(restaurantId);
+        Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
         if (restaurant.isEmpty()) {
             throw new NotFoundException("No restaurant found with id = " + restaurantId);
         }

@@ -1,15 +1,8 @@
 package ru.restaurants.restvoting.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.restaurants.restvoting.model.User;
 
-import java.util.List;
-
-public interface UserRepository {
-    User getById(Integer id);
-
-    User getByName(String name);
-
-    User getByEmail(String email);
-
-    List<User> getAll();
+public interface UserRepository extends JpaRepository<User, Integer> {
+    User findByEmail(String email);
 }

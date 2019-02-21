@@ -12,8 +12,6 @@ import java.util.List;
 public interface DishService {
     Restaurant addRestaurant(Restaurant restaurant, Integer restaurantId);
 
-    List<Restaurant> listAllRestaurants();
-
     Dish create(Dish dish);
 
     MenuItem createMenuItem(MenuItem menuItem, int restaurantId);

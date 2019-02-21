@@ -41,19 +41,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public Optional<Restaurant> getRestaurantById(Integer id) {
-        return restaurantRepository.getById(id);
+        return restaurantRepository.findById(id);
     }
 
     @Override
     public List<Restaurant> getRestaurants() {
-        return restaurantRepository.getAll();
+        return restaurantRepository.findAll();
     }
 
     @Override
     public boolean vote(int restaurantId, int userId) {
         //Remember to run this app with option "-Duser.timezone=GMT" - to force date operations be in UTC timezone
         LocalTime localTime = LocalTime.now();
-        Optional<Restaurant> restaurantOptional = restaurantRepository.getById(restaurantId);
+        Optional<Restaurant> restaurantOptional = restaurantRepository.findById(restaurantId);
         if (restaurantOptional.isEmpty()) {
             throw new NotFoundException("No restaurant found with id " + restaurantId);
         }
@@ -77,11 +77,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Map<Integer, Integer> getVotesForDate(LocalDate date) {
-        List<Integer> restaurant_ids = restaurantRepository.getAll()
+    public Map<Integer, Integer> getVotesForToday() {
+        List<Integer> restaurant_ids = restaurantRepository.findAll()
                 .stream().map(AbstractBaseEntity::getId).collect(Collectors.toList());
         Map<Integer, Integer> rawResult = new HashMap<>();
-        restaurant_ids.forEach(r_id -> rawResult.put(r_id, voteRepository.countByDateAndRestaurantId(date, r_id)));
+        restaurant_ids.forEach(r_id -> rawResult.put(r_id, voteRepository.countByDateAndRestaurantId(LocalDate.now(), r_id)));
         //Sorting map by values (order by votes count desc)
         Map<Integer, Integer> result = rawResult.entrySet().stream().sorted(Map.Entry.comparingByValue((o2, o1) -> {
             if (o2 > o1) {
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.getByEmail(email);
+        User user = userRepository.findByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException("User " + email + " is not found");
         }

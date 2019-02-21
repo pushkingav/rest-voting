@@ -4,26 +4,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.restaurants.restvoting.model.User;
 import ru.restaurants.restvoting.model.Vote;
+import ru.restaurants.restvoting.repository.UserRepository;
 import ru.restaurants.restvoting.repository.VoteRepository;
+import ru.restaurants.restvoting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class DataJpaVoteRepositoryImpl implements VoteRepository {
     @Autowired
-    CrudUserRepository crudUserRepository;
+    UserRepository userRepository;
 
     @Autowired
     CrudVoteRepository crudVoteRepository;
 
     @Override
     public Vote saveOrUpdate(Vote vote, int userId) {
-        User user = crudUserRepository.findById(userId).get();
-        if (user != null) {
-            vote.setUser(user);
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            vote.setUser(user.get());
+        } else {
+            throw new NotFoundException(String.format("No user found with id %s", userId));
         }
-
         return crudVoteRepository.save(vote);
     }
 

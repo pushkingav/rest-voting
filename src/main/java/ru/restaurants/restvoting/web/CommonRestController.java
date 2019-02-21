@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.restaurants.restvoting.model.MenuItem;
 import ru.restaurants.restvoting.model.Restaurant;
+import ru.restaurants.restvoting.repository.RestaurantRepository;
 import ru.restaurants.restvoting.service.DishService;
 
 import java.time.LocalDate;
@@ -20,13 +21,16 @@ public class CommonRestController {
     private final DishService dishService;
 
     @Autowired
+    private RestaurantRepository restaurantRepository;
+
+    @Autowired
     public CommonRestController(DishService dishService) {
         this.dishService = dishService;
     }
 
     @GetMapping("/dishes/{restaurant_id}")
-    public List<MenuItem> getAll(@PathVariable("restaurant_id") Integer restaurantId,
-                                 @RequestParam(value = "date", required = false) LocalDate date) {
+    public List<MenuItem> getAllMenuItems(@PathVariable("restaurant_id") Integer restaurantId,
+                                          @RequestParam(value = "date", required = false) LocalDate date) {
         if (date == null) {
             return dishService.getAllByRestaurantId(restaurantId);
         }
@@ -35,6 +39,6 @@ public class CommonRestController {
 
     @GetMapping("/restaurants")
     public List<Restaurant> getAllRestaurants() {
-        return dishService.listAllRestaurants();
+        return restaurantRepository.findAll();
     }
 }

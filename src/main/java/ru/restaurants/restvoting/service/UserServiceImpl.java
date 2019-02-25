@@ -18,6 +18,7 @@ import ru.restaurants.restvoting.util.exception.NotFoundException;
 import ru.restaurants.restvoting.util.exception.TooLateForVoteException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -52,14 +53,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public boolean vote(int restaurantId, int userId) {
         //Remember to run this app with option "-Duser.timezone=GMT" - to force date operations be in UTC timezone
-        LocalTime localTime = LocalTime.now();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalTime localTime = localDateTime.toLocalTime();
         Optional<Restaurant> restaurantOptional = restaurantRepository.findById(restaurantId);
         if (restaurantOptional.isEmpty()) {
             throw new NotFoundException("No restaurant found with id " + restaurantId);
         }
         Vote vote = null;
         try {
-            vote = voteRepository.getByUserIdAndDate(LocalDate.now(), userId);
+            vote = voteRepository.getByUserIdAndDate(userId, LocalDate.now());
         } catch (NoSuchElementException nse) {
             // No vote with such date and user - it's ok, we will create a new one!
             nse.printStackTrace();
@@ -71,9 +73,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 throw new TooLateForVoteException("Your vote can't be changed after 11:00 UTC");
             }
         }
-        vote.setDate(LocalDate.now());
+        vote.setDate(localDateTime.toLocalDate());
         vote.setRestaurantId(restaurantId);
-        return (voteRepository.saveOrUpdate(vote, userId)) != null;
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            vote.setUser(user.get());
+        } else {
+            throw new NotFoundException(String.format("No user found with id %s", userId));
+        }
+        return voteRepository.save(vote) != null;
     }
 
     @Override

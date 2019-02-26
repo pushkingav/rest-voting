@@ -12,15 +12,15 @@ import ru.restaurants.restvoting.to.DishTo;
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
-@RequestMapping(value = AdminRestController.ADMIN_REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class AdminRestController {
-    static final String ADMIN_REST_URL = "/rest/admin";
 
+@RestController
+@RequestMapping(value = RestaurantsRestController.RESTAURANTS_REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class RestaurantsRestController {
+    static final String RESTAURANTS_REST_URL = "/rest/restaurants";
     @Autowired
     private DishService dishService;
 
-    @PostMapping(value = "/restaurants", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> addRestaurant(@Valid @RequestBody Restaurant restaurant) {
         Restaurant created = dishService.addRestaurant(restaurant, null);
         if (created != null) {
@@ -29,8 +29,7 @@ public class AdminRestController {
         return ResponseEntity.unprocessableEntity().build();
     }
 
-    @PostMapping(value = "/dishes/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces =
-            MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/{restaurantId}/dishes", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addManyDishes(@Valid @RequestBody List<DishTo> dishToList, @PathVariable Integer restaurantId) {
         dishService.addDishes(dishToList, restaurantId);

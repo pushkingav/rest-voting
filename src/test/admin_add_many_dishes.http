@@ -1,4 +1,4 @@
-POST http://localhost:18080/restvoting/rest/admin/dishes/100003
+POST http://localhost:18080/restvoting/rest/restaurants/100002/dishes/
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json

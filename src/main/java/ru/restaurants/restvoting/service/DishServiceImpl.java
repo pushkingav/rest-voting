@@ -9,7 +9,7 @@ import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.repository.DishRepository;
 import ru.restaurants.restvoting.repository.MenuItemRepository;
 import ru.restaurants.restvoting.repository.RestaurantRepository;
-import ru.restaurants.restvoting.to.DishTo;
+import ru.restaurants.restvoting.to.MenuItemTo;
 import ru.restaurants.restvoting.util.DishUtil;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
 
@@ -49,7 +49,7 @@ public class DishServiceImpl implements DishService {
 
     @Override
     @Transactional
-    public void addDishes(List<DishTo> dishesTos, Integer restaurantId) {
+    public void addDishes(List<MenuItemTo> dishesTos, Integer restaurantId) {
         //TODO - add cache!
         Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
         if (restaurant.isEmpty()) {
@@ -57,12 +57,12 @@ public class DishServiceImpl implements DishService {
         }
         //TODO - this "select" MUST be cached!
         List<Dish> dishes = dishRepository.findAll();
-        for (DishTo dishTo: dishesTos) {
-            Dish dish = dishes.stream().filter(d -> dishTo.getDescription().equals(d.getDescription())).findFirst().orElse(null);
+        for (MenuItemTo menuItemTo : dishesTos) {
+            Dish dish = dishes.stream().filter(d -> menuItemTo.getDescription().equals(d.getDescription())).findFirst().orElse(null);
             if (dish == null) {
-                dish = create(DishUtil.createNewDishFromTo(dishTo));
+                dish = create(DishUtil.createNewDishFromTo(menuItemTo));
             }
-            MenuItem menuItem = DishUtil.createNewMenuItemFromTo(dishTo);
+            MenuItem menuItem = DishUtil.createNewMenuItemFromTo(menuItemTo);
             menuItem.setDish(dish);
             menuItem.setRestaurant(restaurant.get());
             menuItemRepository.save(menuItem);

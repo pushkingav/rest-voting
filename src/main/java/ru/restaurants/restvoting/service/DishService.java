@@ -3,7 +3,7 @@ package ru.restaurants.restvoting.service;
 import ru.restaurants.restvoting.model.Dish;
 import ru.restaurants.restvoting.model.MenuItem;
 import ru.restaurants.restvoting.model.Restaurant;
-import ru.restaurants.restvoting.to.DishTo;
+import ru.restaurants.restvoting.to.MenuItemTo;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -22,7 +22,7 @@ public interface DishService {
 
     void delete(int id) throws NotFoundException;
 
-    void addDishes(List<DishTo> dishToList, Integer restaurantId);
+    void addDishes(List<MenuItemTo> menuItemToList, Integer restaurantId);
 
     List<MenuItem> getAllByRestaurantId(int restaurantId);
 

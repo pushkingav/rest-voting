@@ -1,24 +1,32 @@
 package ru.restaurants.restvoting.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.restaurants.restvoting.model.MenuItem;
 import ru.restaurants.restvoting.model.Restaurant;
+import ru.restaurants.restvoting.repository.RestaurantRepository;
 import ru.restaurants.restvoting.service.DishService;
-import ru.restaurants.restvoting.to.DishTo;
+import ru.restaurants.restvoting.to.MenuItemTo;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
-
+@ComponentScan
 @RestController
 @RequestMapping(value = RestaurantsRestController.RESTAURANTS_REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestaurantsRestController {
     static final String RESTAURANTS_REST_URL = "/rest/restaurants";
+
     @Autowired
     private DishService dishService;
+
+    @Autowired
+    private RestaurantRepository restaurantRepository;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> addRestaurant(@Valid @RequestBody Restaurant restaurant) {
@@ -29,9 +37,23 @@ public class RestaurantsRestController {
         return ResponseEntity.unprocessableEntity().build();
     }
 
-    @PostMapping(value = "/{restaurantId}/dishes", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/{restaurantId}/menu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addManyDishes(@Valid @RequestBody List<DishTo> dishToList, @PathVariable Integer restaurantId) {
-        dishService.addDishes(dishToList, restaurantId);
+    public void createMenuItems(@Valid @RequestBody List<MenuItemTo> menuItemToList, @PathVariable Integer restaurantId) {
+        dishService.addDishes(menuItemToList, restaurantId);
+    }
+
+    @GetMapping("/{restaurantId}/menu")
+    public List<MenuItem> getAllMenuItems(@PathVariable("restaurantId") Integer restaurantId,
+                                          @RequestParam(value = "date", required = false) LocalDate date) {
+        if (date == null) {
+            return dishService.getAllByRestaurantId(restaurantId);
+        }
+        return dishService.getAllByRestaurantIdAndDate(restaurantId, date);
+    }
+
+    @GetMapping
+    public List<Restaurant> getAllRestaurants() {
+        return restaurantRepository.findAll();
     }
 }

@@ -1,4 +1,4 @@
-GET http://localhost:18080/restvoting/rest/dishes/100003
+GET http://localhost:18080/restvoting/rest/restaurants/100003/menu
 Accept: */*
 Cache-Control: no-cache
 Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu

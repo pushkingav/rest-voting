@@ -18,7 +18,7 @@ public class VoteRestController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/today")
+    @GetMapping()
     public Map<Integer, Integer> getVotesForToday() {
         return userService.getVotesForToday();
     }

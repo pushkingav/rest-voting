@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class DishTo {
+public class MenuItemTo {
     @NotNull
     private String description;
     
@@ -17,10 +17,10 @@ public class DishTo {
     
     private Integer restaurantId;
 
-    public DishTo() {
+    public MenuItemTo() {
     }
 
-    public DishTo(String description, BigDecimal price, LocalDate date, Integer restaurantId) {
+    public MenuItemTo(String description, BigDecimal price, LocalDate date, Integer restaurantId) {
         this.description = description;
         this.price = price;
         this.date = date;
@@ -63,11 +63,11 @@ public class DishTo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DishTo dishTo = (DishTo) o;
-        return description.equals(dishTo.description) &&
-                price.equals(dishTo.price) &&
-                date.equals(dishTo.date) &&
-                restaurantId.equals(dishTo.restaurantId);
+        MenuItemTo menuItemTo = (MenuItemTo) o;
+        return description.equals(menuItemTo.description) &&
+                price.equals(menuItemTo.price) &&
+                date.equals(menuItemTo.date) &&
+                restaurantId.equals(menuItemTo.restaurantId);
     }
 
     @Override

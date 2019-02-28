@@ -3,6 +3,7 @@ package ru.restaurants.restvoting.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
@@ -39,6 +40,14 @@ public class User extends AbstractBaseEntity {
         this.name = name;
         this.password = password;
         this.roles = roles;
+    }
+
+    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
+        super(id);
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.roles = EnumSet.of(role, roles);
     }
 
     public String getName() {

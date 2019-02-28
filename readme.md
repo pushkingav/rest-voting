@@ -23,5 +23,6 @@ P.P.S.: Assume that your API will be used by a frontend developer to build front
 
 
 **Developer's remarks**
+* You can find curl commands in the curl.md
 * Last voting time is set in the `src\main\resources\application.properties`.
 * Last voting time is given in UTC and is proceeded in UTC. 

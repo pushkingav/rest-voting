@@ -1,0 +1,8 @@
+== Curl request
+include::{snippets}/get_restaurants/curl-request.adoc[]
+
+== Http request
+include::{snippets}/get_restaurants/http-request.adoc[]
+
+== Http response
+include::{snippets}/get_restaurants/http-response.adoc[]

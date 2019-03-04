@@ -1,8 +1,0 @@
-POST http://localhost:18080/restvoting/rest/votes/100005
-Accept: */*
-Content-Type: application/json
-Cache-Control: no-cache
-Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
-#Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=
-###
-

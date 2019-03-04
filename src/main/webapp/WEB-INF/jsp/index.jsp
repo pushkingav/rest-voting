@@ -8,7 +8,6 @@
     <div class="container">
         <form method="post" action="users" class="form-inline">
             <label>Test</label>
-
             <button type="submit" class="btn btn-primary">OK</button>
         </form>
     </div>

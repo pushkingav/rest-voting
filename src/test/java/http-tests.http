@@ -1,0 +1,51 @@
+#  Http tests
+
+## Admin Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
+## User  Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=
+
+### 1. Admin may add a new Restaurant
+POST http://localhost:18080/restvoting/rest/admin/restaurants
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
+
+{"name":"Добавленный Ресторан 1"}
+
+### 2. Admin adds dishes to menu of one Restaurant
+POST http://localhost:18080/restvoting/rest/restaurants/100003/menu
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
+
+[{"date":"2018-12-15","description":"Овсянка","price":"70"}, {"date":"2018-12-15","description":"Рубленая Котлета",
+  "price":"100"}, {"date":"2018-12-15", "description":"Солянка1","price":"200"}]
+
+### 3. User (here and after or Admin) gets a list of Restaurants
+GET http://localhost:18080/restvoting/rest/restaurants
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
+
+### 4. User gets menu for desired Restaurant
+GET http://localhost:18080/restvoting/rest/restaurants/100003/menu
+Accept: */*
+Cache-Control: no-cache
+Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
+
+### 5. User votes for the best restaurant
+POST http://localhost:18080/restvoting/rest/votes/100003
+Accept: */*
+Content-Type: application/json
+Cache-Control: no-cache
+#Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
+Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=
+
+### 6. Admin gets votes for today - optional
+GET http://localhost:18080/restvoting/rest/votes
+Accept: */*
+Content-Type: application/json
+Cache-Control: no-cache
+Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu

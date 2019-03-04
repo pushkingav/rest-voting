@@ -1,7 +1,0 @@
-GET http://localhost:18080/restvoting/rest/restaurants
-Accept: */*
-Cache-Control: no-cache
-Content-Type: application/json
-Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
-
-###

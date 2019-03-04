@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.restaurants.restvoting.model.Vote;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 public interface VoteRepository extends JpaRepository<Vote, Integer> {
     @Override
@@ -13,5 +14,5 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
 
     Integer countByDateAndRestaurantId(LocalDate date, int restaurantId);
 
-    Vote getByUserIdAndDate(int userId, LocalDate date);
+    Optional<Vote> getByUserIdAndDate(int userId, LocalDate date);
 }

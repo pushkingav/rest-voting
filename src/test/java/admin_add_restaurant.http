@@ -1,9 +1,0 @@
-POST http://localhost:18080/restvoting/rest/admin/restaurants
-Accept: */*
-Cache-Control: no-cache
-Content-Type: application/json
-Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
-
-{"name":"Добавленный Ресторан 1"}
-
-###

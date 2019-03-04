@@ -20,7 +20,10 @@ import ru.restaurants.restvoting.util.exception.TooLateForVoteException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service("userService")
@@ -59,19 +62,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (restaurantOptional.isEmpty()) {
             throw new NotFoundException("No restaurant found with id " + restaurantId);
         }
-        Vote vote = null;
-        try {
-            vote = voteRepository.getByUserIdAndDate(userId, LocalDate.now());
-        } catch (NoSuchElementException nse) {
-            // No vote with such date and user - it's ok, we will create a new one!
-            nse.printStackTrace();
-        }
-        if (vote == null) {
+        Optional<Vote> optionalVote = voteRepository.getByUserIdAndDate(userId, LocalDate.now());
+        Vote vote;
+        if (optionalVote.isEmpty()) {
             vote = new Vote();
         } else {
             if (localTime.isAfter(lastVotingTime)) {
                 throw new TooLateForVoteException("Your vote can't be changed after 11:00 UTC");
             }
+            vote = optionalVote.get();
         }
         vote.setDate(localDateTime.toLocalDate());
         vote.setRestaurantId(restaurantId);
@@ -86,6 +85,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public Map<Integer, Integer> getVotesForToday() {
+        //TODO - fix sorting and the base algorithm. Avoid db requests within a loop.
         List<Integer> restaurant_ids = restaurantRepository.findAll()
                 .stream().map(AbstractBaseEntity::getId).collect(Collectors.toList());
         Map<Integer, Integer> rawResult = new HashMap<>();

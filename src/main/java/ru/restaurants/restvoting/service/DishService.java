@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface DishService {
+    //TODO - remove unnecessary methods
     Restaurant addRestaurant(Restaurant restaurant, Integer restaurantId);
 
     Dish create(Dish dish);

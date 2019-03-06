@@ -1,3 +1,4 @@
+
 #### Common: list Restaurants
 `curl -s http://localhost:18080/restvoting/rest/restaurants/list --user admin@gmail.com:admin`
 

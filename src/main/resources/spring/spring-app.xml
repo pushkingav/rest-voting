@@ -8,6 +8,7 @@
 
     <!-- Not necessary, already included with component-scan -->
     <!--<context:annotation-config/>-->
+    <import resource="spring-tools.xml"/>
     <import resource="spring-security.xml"/>
 
     <context:property-placeholder location="classpath:application.properties" system-properties-mode="OVERRIDE"/>

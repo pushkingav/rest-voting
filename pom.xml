@@ -41,7 +41,7 @@
         <webjars-datatables.version>1.10.19</webjars-datatables.version>
 
         <!--Tools-->
-        <ehcache.version>3.7.0</ehcache.version>
+        <ehcache.version>3.6.1</ehcache.version>
 
         <!--Spring-restdocs generated snippets location-->
         <snippetsDirectory>${project.build.directory}/generated-snippets</snippetsDirectory>
@@ -165,7 +165,7 @@
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
+            <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
         <dependency>

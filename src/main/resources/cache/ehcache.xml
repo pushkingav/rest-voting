@@ -15,5 +15,14 @@
         <heap>1</heap>
     </cache-template>
 
+    <cache-template name="smallQuantityNonExpiryCache">
+        <expiry>
+            <none/>
+        </expiry>
+        <heap>20</heap>
+    </cache-template>
+
     <cache alias="users" uses-template="singleNonExpiryCache"/>
+    <cache alias="menuItems" uses-template="expiryCache"/>
+    <cache alias="restaurants" uses-template="smallQuantityNonExpiryCache"/>
 </config>

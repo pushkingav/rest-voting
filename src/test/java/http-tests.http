@@ -4,7 +4,7 @@
 ## User  Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=
 
 ### 1. Admin may add a new Restaurant
-POST http://localhost:18080/restvoting/rest/admin/restaurants
+POST http://localhost:18080/restvoting/rest/restaurants
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json

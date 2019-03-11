@@ -52,8 +52,8 @@ public class RestaurantsRestController {
         return dishService.getAllByRestaurantIdAndDate(restaurantId, date);
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getAllRestaurants() {
-        return restaurantRepository.findAll();
+        return dishService.getAllRestaurants();
     }
 }

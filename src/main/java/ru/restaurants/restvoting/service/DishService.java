@@ -13,6 +13,8 @@ public interface DishService {
     //TODO - remove unnecessary methods
     Restaurant addRestaurant(Restaurant restaurant, Integer restaurantId);
 
+    List<Restaurant> getAllRestaurants();
+
     Dish create(Dish dish);
 
     MenuItem createMenuItem(MenuItem menuItem, int restaurantId);
@@ -28,6 +30,4 @@ public interface DishService {
     List<MenuItem> getAllByRestaurantId(int restaurantId);
 
     List<MenuItem> getAllByRestaurantIdAndDate(int restaurantId, LocalDate date);
-
-    List <MenuItem> getAll();
 }

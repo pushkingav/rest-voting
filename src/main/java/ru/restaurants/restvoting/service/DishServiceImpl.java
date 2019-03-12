@@ -31,6 +31,7 @@ public class DishServiceImpl implements DishService {
     private MenuItemRepository menuItemRepository;
 
     @CacheEvict(value = "restaurants", allEntries = true)
+    @Transactional
     @Override
     public Restaurant addRestaurant(Restaurant restaurant, Integer id) {
         Optional<Restaurant> checked = restaurantRepository.findByName(restaurant.getName());

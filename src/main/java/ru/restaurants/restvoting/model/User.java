@@ -10,7 +10,6 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User extends AbstractBaseEntity {
-    //TODO - migrate "name" to "email"
     @Column(name = "name", nullable = false, unique = true)
     @NotEmpty
     protected String name;

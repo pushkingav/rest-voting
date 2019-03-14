@@ -11,7 +11,7 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
     @Override
     @Transactional
     Vote save(Vote vote);
-
+    //TODO - implement the request to fetch the map for votes: select V.RESTAURANT_ID, count(*) restaurant_id from VOTES V group by RESTAURANT_ID;
     Integer countByDateAndRestaurantId(LocalDate date, int restaurantId);
 
     Optional<Vote> getByUserIdAndDate(int userId, LocalDate date);

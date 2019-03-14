@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.restaurants.restvoting.model.MenuItem;
 import ru.restaurants.restvoting.model.Restaurant;
-import ru.restaurants.restvoting.repository.RestaurantRepository;
 import ru.restaurants.restvoting.service.DishService;
 import ru.restaurants.restvoting.to.MenuItemTo;
 
@@ -24,9 +23,6 @@ public class RestaurantsRestController {
 
     @Autowired
     private DishService dishService;
-
-    @Autowired
-    private RestaurantRepository restaurantRepository;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> addRestaurant(@Valid @RequestBody Restaurant restaurant) {

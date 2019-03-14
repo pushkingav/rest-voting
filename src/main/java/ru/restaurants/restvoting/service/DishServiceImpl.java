@@ -53,11 +53,6 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public MenuItem createMenuItem(MenuItem menuItem, int restaurantId) {
-        return menuItem;
-    }
-
-    @Override
     @Transactional
     public void addDishes(List<MenuItemTo> dishesTos, Integer restaurantId) {
         //TODO - add cache!

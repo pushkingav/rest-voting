@@ -19,5 +19,5 @@ public interface UserService {
     /**
      *   Get all votes for custom date in a map like restaurantId -> votesTodayCount
      * */
-    Map<Integer, Integer> getVotesForToday();
+    Map<Integer, Long> getVotesForToday();
 }

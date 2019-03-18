@@ -19,7 +19,7 @@ public class VoteRestController {
     private UserService userService;
 
     @GetMapping()
-    public Map<Integer, Integer> getVotesForToday() {
+    public Map<Integer, Long> getVotesForToday() {
         return userService.getVotesForToday();
     }
 

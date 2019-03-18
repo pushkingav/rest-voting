@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.restaurants.restvoting.AuthorizedUser;
-import ru.restaurants.restvoting.model.AbstractBaseEntity;
 import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.model.User;
 import ru.restaurants.restvoting.model.Vote;
@@ -24,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -84,26 +82,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Map<Integer, Integer> getVotesForToday() {
-        //TODO - fix sorting and the base algorithm. Avoid db requests within a loop.
-        List<Integer> restaurant_ids = restaurantRepository.findAll()
-                .stream().map(AbstractBaseEntity::getId).collect(Collectors.toList());
-        Map<Integer, Integer> rawResult = new HashMap<>();
-        restaurant_ids.forEach(r_id -> rawResult.put(r_id, voteRepository.countByDateAndRestaurantId(LocalDate.now(), r_id)));
-        //Sorting map by values (order by votes count desc)
-        Map<Integer, Integer> result = rawResult.entrySet().stream().sorted(Map.Entry.comparingByValue((o2, o1) -> {
-            if (o2 > o1) {
-                return 1;
-            } else {
-                if (o2 < o1) {
-                    return -1;
-                }
-            }
-            return 0;
-        }))
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, HashMap::new)
-                );
+    public Map<Integer, Long> getVotesForToday() {
+        List<Object[]> raw = voteRepository.getVotesForToday();
+        Map<Integer, Long> result = new HashMap<>();
+        raw.forEach(objects -> result.put((Integer) objects[0], (Long) objects[1]));
         return result;
     }
 

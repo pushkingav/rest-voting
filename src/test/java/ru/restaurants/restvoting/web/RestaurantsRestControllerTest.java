@@ -1,13 +1,17 @@
 package ru.restaurants.restvoting.web;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
 import org.springframework.restdocs.response.ResponsePostProcessors;
+import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.model.Role;
 import ru.restaurants.restvoting.model.User;
+import ru.restaurants.restvoting.web.json.JsonUtil;
 
 import static org.springframework.restdocs.RestDocumentation.modifyResponseTo;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.restaurants.restvoting.TestUtil.userHttpBasic;
 import static ru.restaurants.restvoting.model.AbstractBaseEntity.START_SEQ;
@@ -20,7 +24,16 @@ class RestaurantsRestControllerTest extends AbstractRestControllerTest {
     public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN, Role.ROLE_USER);
 
     @Test
-    void addRestaurant() {
+    void addRestaurant() throws Exception {
+        Restaurant created = new Restaurant("Test Restaurant Name");
+        this.mockMvc.perform(post(RESTAURANTS_REST_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonUtil.writeValue(created))
+                        .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andDo(modifyResponseTo(ResponsePostProcessors.prettyPrintContent())
+                .andDocument("add_restaurant").withResponseFields(
+                                fieldWithPath("[]name").description("The Restaurant's name")));
     }
 
     @Test

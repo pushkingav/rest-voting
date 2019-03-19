@@ -16,8 +16,9 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
 
     Integer countByDateAndRestaurantId(LocalDate date, int restaurantId);
 
-    //NATIVE - select V.RESTAURANT_ID, count(*) restaurant_id from VOTES V group by RESTAURANT_ID;
     //TODO - implement map sorting by restaurantId
+    //NATIVE - select V.RESTAURANT_ID, count(*) restaurant_id from VOTES V group by RESTAURANT_ID;
+    @Transactional
     @Query("select v.restaurantId, count(all v) from Vote v group by v.restaurantId")
     List<Object[]> getVotesForToday();
 

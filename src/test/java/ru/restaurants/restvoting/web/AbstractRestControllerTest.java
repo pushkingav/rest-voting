@@ -1,6 +1,9 @@
 package ru.restaurants.restvoting.web;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.restdocs.ManualRestDocumentation;
+import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -11,7 +14,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import javax.annotation.PostConstruct;
 
-import static org.springframework.restdocs.RestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 @SpringJUnitWebConfig(locations = {
@@ -31,9 +34,18 @@ public class AbstractRestControllerTest {
     }
 
     protected MockMvc mockMvc;
+    private ManualRestDocumentation restDocumentation = new ManualRestDocumentation();
 
     @Autowired
     private WebApplicationContext webApplicationContext;
+
+    @BeforeEach
+    public void setUp(WebApplicationContext webApplicationContext,
+                      RestDocumentationContextProvider restDocumentation) {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                .apply(documentationConfiguration(restDocumentation))
+                .build();
+    }
 
     @PostConstruct
     private void postConstruct() {
@@ -41,7 +53,7 @@ public class AbstractRestControllerTest {
                 .webAppContextSetup(webApplicationContext)
                 .addFilter(CHARACTER_ENCODING_FILTER)
                 .apply(springSecurity())
-                .apply(documentationConfiguration())
+                .apply(documentationConfiguration(this.restDocumentation))
                 .build();
     }
 }

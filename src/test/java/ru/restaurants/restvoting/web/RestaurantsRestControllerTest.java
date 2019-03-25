@@ -31,9 +31,9 @@ class RestaurantsRestControllerTest extends AbstractRestControllerTest {
                         .content(JsonUtil.writeValue(created))
                         .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
-                /*.andDo(modifyResponseTo(ResponsePostProcessors.prettyPrintContent())*/
                 .andDo(document("add_restaurant",responseFields(
-                                fieldWithPath("[]name").description("The Restaurant's name"))));
+                                fieldWithPath("id").description("The id of the Restaurant"),
+                                fieldWithPath("name").description("The Restaurant's name"))));
     }
 
     @Test

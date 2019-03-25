@@ -1,8 +1,19 @@
-== Curl request
+== 1. Add a Restaurant
+=== Curl request
+include::{snippets}/add_restaurant/curl-request.adoc[]
+
+=== Http request
+include::{snippets}/add_restaurant/http-request.adoc[]
+
+=== Http response
+include::{snippets}/add_restaurant/http-response.adoc[]
+
+== 2. Get all Restaurants
+=== Curl request
 include::{snippets}/get_restaurants/curl-request.adoc[]
 
-== Http request
+=== Http request
 include::{snippets}/get_restaurants/http-request.adoc[]
 
-== Http response
+=== Http response
 include::{snippets}/get_restaurants/http-response.adoc[]

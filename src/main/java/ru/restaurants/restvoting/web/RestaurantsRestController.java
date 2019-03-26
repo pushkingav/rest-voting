@@ -28,9 +28,15 @@ public class RestaurantsRestController {
     public ResponseEntity<Restaurant> addRestaurant(@Valid @RequestBody Restaurant restaurant) {
         Restaurant created = dishService.addRestaurant(restaurant, null);
         if (created != null) {
+            //TODO - change to ResponseEntity.created(URI location)
             return ResponseEntity.ok(created);
         }
         return ResponseEntity.unprocessableEntity().build();
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Restaurant> getAllRestaurants() {
+        return dishService.getAllRestaurants();
     }
 
     @PostMapping(value = "/{restaurantId}/menu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,10 +52,5 @@ public class RestaurantsRestController {
             return dishService.getAllByRestaurantId(restaurantId);
         }
         return dishService.getAllByRestaurantIdAndDate(restaurantId, date);
-    }
-
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Restaurant> getAllRestaurants() {
-        return dishService.getAllRestaurants();
     }
 }

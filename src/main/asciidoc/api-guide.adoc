@@ -1,3 +1,13 @@
+= REST API Guide for the "Restaurant Voting System"
+Andrew Pushkin;
+:doctype: book
+:toc:
+:sectanchors:
+:sectlinks:
+:toclevels: 4
+:source-highlighter: highlightjs
+
+[[add_restaurant]]
 == 1. Add a Restaurant
 === Curl request
 include::{snippets}/add_restaurant/curl-request.adoc[]
@@ -5,9 +15,10 @@ include::{snippets}/add_restaurant/curl-request.adoc[]
 === Http request
 include::{snippets}/add_restaurant/http-request.adoc[]
 
-=== Http response
+=== Http response example
 include::{snippets}/add_restaurant/http-response.adoc[]
 
+[[get_restaurants]]
 == 2. Get all Restaurants
 === Curl request
 include::{snippets}/get_restaurants/curl-request.adoc[]
@@ -15,5 +26,8 @@ include::{snippets}/get_restaurants/curl-request.adoc[]
 === Http request
 include::{snippets}/get_restaurants/http-request.adoc[]
 
-=== Http response
+=== Response fields
+include::{snippets}/get_restaurants/response-fields.adoc[]
+
+=== Http response example
 include::{snippets}/get_restaurants/http-response.adoc[]

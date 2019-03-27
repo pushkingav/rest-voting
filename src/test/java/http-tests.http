@@ -13,7 +13,7 @@ Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
 {"name":"Добавленный Ресторан 1"}
 
 ### 2. Admin adds dishes to menu of one Restaurant
-POST http://localhost:18080/restvoting/rest/restaurants/100003/menu
+POST http://localhost:18080/restvoting/rest/restaurants/100005/menu
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -30,7 +30,7 @@ Content-Type: application/json
 Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
 
 ### 4. User gets menu for desired Restaurant
-GET http://localhost:18080/restvoting/rest/restaurants/100003/menu
+GET http://localhost:18080/restvoting/rest/restaurants/100005/menu
 Accept: */*
 Cache-Control: no-cache
 Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu

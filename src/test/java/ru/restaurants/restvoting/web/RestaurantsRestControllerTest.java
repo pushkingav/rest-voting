@@ -26,6 +26,7 @@ class RestaurantsRestControllerTest extends AbstractRestControllerTest {
     public static final int ADMIN_ID = START_SEQ + 1;
     public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN, Role.ROLE_USER);
 
+    //TODO - Fix curl commands in docs - missing /restvoting/ in the path, wrong port 8080 instead of 18080
     @Test
     void addRestaurant() throws Exception {
         Restaurant created = new Restaurant("Test Restaurant Name");

@@ -44,12 +44,22 @@ class RestaurantsRestControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    void createMenuItems() {
+    void createMenuItems() throws Exception {
 
     }
 
     @Test
-    void getAllMenuItems() {
+    void getMenuItemsOfRestaurant() throws Exception {
+        mockMvc.perform(get(RESTAURANTS_REST_URL + "/100005/menu")
+                            .with(userHttpBasic(ADMIN)))
+                .andExpect(status().is2xxSuccessful())
+                .andDo(document("get_menu_items", responseFields(
+                        fieldWithPath("[]id").description("Menu item id"),
+                        fieldWithPath("[]date").description("Date when this menu is served"),
+                        fieldWithPath("[]price").description("The price of the current menu item"),
+                        fieldWithPath("[]dish.id").description("Dish id"),
+                        fieldWithPath("[]dish.description").description("Dish description")
+                )));
     }
 
     @Test

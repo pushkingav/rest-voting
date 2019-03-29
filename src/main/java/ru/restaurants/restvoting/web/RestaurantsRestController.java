@@ -46,8 +46,8 @@ public class RestaurantsRestController {
     }
 
     @GetMapping("/{restaurantId}/menu")
-    public List<MenuItem> getAllMenuItems(@PathVariable("restaurantId") Integer restaurantId,
-                                          @RequestParam(value = "date", required = false) LocalDate date) {
+    public List<MenuItem> getMenuItemsOfRestaurant(@PathVariable("restaurantId") Integer restaurantId,
+                                                   @RequestParam(value = "date", required = false) LocalDate date) {
         if (date == null) {
             return dishService.getAllByRestaurantId(restaurantId);
         }

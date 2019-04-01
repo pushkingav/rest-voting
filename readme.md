@@ -23,7 +23,10 @@ P.P.S.: Assume that your API will be used by a frontend developer to build front
 
 
 **Developer's remarks**
-* You can find curl commands in the curl.md
+* You can find REST Api Documentation including curl commands in the `target/generated-docs/api-guide.html` after running tests and the
+mvn package task.
 * Last voting time is set in the `src\main\resources\application.properties`.
 * Last voting time is given in UTC and is proceeded in UTC.
+* Please set the 'application.http.port' property in the `application.properties` according to your tomcat settings. This is needed for 
+tests and rest api documentation that is generated automatically on every package task. 
 * There is a directory of dishes in db. See the DISHES table.

@@ -3,6 +3,7 @@ package ru.restaurants.restvoting.web;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
@@ -39,14 +40,19 @@ public class AbstractRestControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    @Value("#{new Integer('${application.http.port}')}")
+    Integer applicationPort;
+
     @BeforeEach
     public void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .addFilter(CHARACTER_ENCODING_FILTER)
                 .apply(springSecurity())
-                .apply(documentationConfiguration(restDocumentation)
-                        .operationPreprocessors()
-                            .withResponseDefaults(prettyPrint()))
+                .apply(documentationConfiguration(restDocumentation).operationPreprocessors().withResponseDefaults(prettyPrint())
+                        .and().uris()
+                                .withScheme("http")
+                                .withHost("localhost")
+                                .withPort(applicationPort))
                 .build();
     }
 

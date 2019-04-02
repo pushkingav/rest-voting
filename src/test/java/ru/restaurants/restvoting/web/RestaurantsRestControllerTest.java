@@ -5,8 +5,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import ru.restaurants.restvoting.TestUtil;
 import ru.restaurants.restvoting.model.Restaurant;
-import ru.restaurants.restvoting.model.Role;
-import ru.restaurants.restvoting.model.User;
 import ru.restaurants.restvoting.web.json.JsonUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,17 +14,15 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.restaurants.restvoting.TestData.*;
 import static ru.restaurants.restvoting.TestUtil.userHttpBasic;
-import static ru.restaurants.restvoting.model.AbstractBaseEntity.START_SEQ;
 import static ru.restaurants.restvoting.web.RestaurantsRestController.RESTAURANTS_REST_URL;
 
 //https://docs.spring.io/spring-restdocs/docs/1.0.0.M1/reference/html5/#getting-started-build-configuration-maven-plugin-phase
 //https://opencredo.com/blogs/rest-api-tooling-review/
 class RestaurantsRestControllerTest extends AbstractRestControllerTest {
-    public static final int ADMIN_ID = START_SEQ + 1;
-    public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN, Role.ROLE_USER);
 
-    //TODO - Fix curl commands in docs - missing /restvoting/ in the path, wrong port 8080 instead of 18080
+
     @Test
     void addRestaurant() throws Exception {
         Restaurant created = new Restaurant("Test Restaurant Name");
@@ -48,12 +44,13 @@ class RestaurantsRestControllerTest extends AbstractRestControllerTest {
     void createMenuItems() throws Exception {
 
     }
-
+    //TODO - make this test to match MenuItemTOs instead of MenuItems. The equals method does not compare embedded dishes!
     @Test
     void getMenuItemsOfRestaurant() throws Exception {
         mockMvc.perform(get(RESTAURANTS_REST_URL + "/100005/menu")
                             .with(userHttpBasic(ADMIN)))
                 .andExpect(status().is2xxSuccessful())
+                .andExpect(getMenuItemsToMatcher(MENU_ITEMS))
                 .andDo(document("get_menu_items", responseFields(
                         fieldWithPath("[]id").description("Menu item id"),
                         fieldWithPath("[]date").description("Date when this menu is served"),
@@ -68,7 +65,6 @@ class RestaurantsRestControllerTest extends AbstractRestControllerTest {
         this.mockMvc.perform(get(RESTAURANTS_REST_URL)
         .with(userHttpBasic(ADMIN)))
         .andExpect(status().isOk())
-        /*TODO - changes in new version. This no longer works: .andDo(modifyResponseTo(ResponsePostProcessors.prettyPrintContent())*/
         .andDo(document("get_restaurants", responseFields(
                         fieldWithPath("[]id").description("The Restaurant's id"),
                         fieldWithPath("[]name").description("The Restaurant's name"))));

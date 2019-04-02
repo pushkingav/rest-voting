@@ -40,6 +40,13 @@ public class MenuItem extends AbstractBaseEntity {
         this.date = date;
     }
 
+    public MenuItem(Integer id, LocalDate date, BigDecimal price, Dish dish) {
+        super(id);
+        this.date = date;
+        this.price = price;
+        this.dish = dish;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }

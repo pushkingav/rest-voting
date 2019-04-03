@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static ru.restaurants.restvoting.TestUtil.convertMenuItemsToDtos;
 import static ru.restaurants.restvoting.TestUtil.readListFromJsonMvcResult;
 import static ru.restaurants.restvoting.model.AbstractBaseEntity.START_SEQ;
 
@@ -23,7 +24,7 @@ public class TestData {
     private static final Dish dish3 = new Dish(START_SEQ + 10, "Салатик");
     private static final Dish dish4 = new Dish(START_SEQ + 11, "Стейк");
 
-    public static final MenuItem item1 = new MenuItem(START_SEQ + 17, LocalDate.now(), new BigDecimal(50), dish1);
+    public static final MenuItem item1 = new MenuItem(START_SEQ + 16, LocalDate.now(), new BigDecimal(50), dish1);
     public static final MenuItem item2 = new MenuItem(START_SEQ + 18, LocalDate.now(), new BigDecimal(75), dish2);
     public static final MenuItem item3 = new MenuItem(START_SEQ + 19, LocalDate.now(), new BigDecimal(100), dish3);
     public static final MenuItem item4 = new MenuItem(START_SEQ + 20, LocalDate.now(), new BigDecimal(500), dish4);
@@ -35,7 +36,7 @@ public class TestData {
     }
 
     public static ResultMatcher getMenuItemsToMatcher(List<MenuItem> expected) {
-        return result -> assertThat(readListFromJsonMvcResult(result, MenuItem.class)).isEqualTo(expected);
+        return result -> assertThat(convertMenuItemsToDtos(readListFromJsonMvcResult(result, MenuItem.class))).isEqualTo(convertMenuItemsToDtos(expected));
     }
 
 }

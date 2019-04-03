@@ -6,11 +6,14 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
+import ru.restaurants.restvoting.model.MenuItem;
 import ru.restaurants.restvoting.model.User;
+import ru.restaurants.restvoting.to.MenuItemTo;
 import ru.restaurants.restvoting.web.json.JsonUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TestUtil {
 
@@ -33,6 +36,10 @@ public class TestUtil {
 
     public static <T> List<T> readListFromJsonMvcResult(MvcResult result, Class<T> clazz) throws UnsupportedEncodingException {
         return JsonUtil.readValues(getContent(result), clazz);
+    }
+
+    public static List<MenuItemTo> convertMenuItemsToDtos(List<MenuItem> menuItems) {
+        return menuItems.stream().map(MenuItemTo::createFromMenuItem).collect(Collectors.toList());
     }
 
     public static void mockAuthorize(User user) {

@@ -1,5 +1,7 @@
 package ru.restaurants.restvoting.to;
 
+import ru.restaurants.restvoting.model.MenuItem;
+
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -18,13 +20,6 @@ public class MenuItemTo {
     private Integer restaurantId;
 
     public MenuItemTo() {
-    }
-
-    public MenuItemTo(String description, BigDecimal price, LocalDate date, Integer restaurantId) {
-        this.description = description;
-        this.price = price;
-        this.date = date;
-        this.restaurantId = restaurantId;
     }
 
     public String getDescription() {
@@ -59,19 +54,40 @@ public class MenuItemTo {
         this.restaurantId = restaurantId;
     }
 
+    public static MenuItemTo createFromMenuItem(MenuItem item) {
+        MenuItemTo to = new MenuItemTo();
+        to.setDescription(item.getDish().getDescription());
+        to.setDate(item.getDate());
+        to.setPrice(item.getPrice());
+        if (item.getRestaurant() != null) {
+            to.setRestaurantId(item.getRestaurant().getId());
+        }
+        return to;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MenuItemTo menuItemTo = (MenuItemTo) o;
-        return description.equals(menuItemTo.description) &&
-                price.equals(menuItemTo.price) &&
-                date.equals(menuItemTo.date) &&
-                restaurantId.equals(menuItemTo.restaurantId);
+        if (!(o instanceof MenuItemTo)) return false;
+        MenuItemTo that = (MenuItemTo) o;
+        return description.equals(that.description) &&
+                price.equals(that.price) &&
+                date.equals(that.date) &&
+                Objects.equals(restaurantId, that.restaurantId);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(description, price, date, restaurantId);
+    }
+
+    @Override
+    public String toString() {
+        return "MenuItemTo{" +
+                "description='" + description + '\'' +
+                ", price=" + price +
+                ", date=" + date +
+                ", restaurantId=" + restaurantId +
+                '}';
     }
 }

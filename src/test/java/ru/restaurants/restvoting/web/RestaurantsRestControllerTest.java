@@ -46,7 +46,7 @@ class RestaurantsRestControllerTest extends AbstractRestControllerTest {
     }
     //TODO - make this test to match MenuItemTOs instead of MenuItems. The equals method does not compare embedded dishes!
     @Test
-    void getMenuItemsOfRestaurant() throws Exception {
+    void getMenuOfRestaurant() throws Exception {
         mockMvc.perform(get(RESTAURANTS_REST_URL + "/100005/menu")
                             .with(userHttpBasic(ADMIN)))
                 .andExpect(status().is2xxSuccessful())

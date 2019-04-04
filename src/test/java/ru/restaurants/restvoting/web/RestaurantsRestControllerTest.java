@@ -1,11 +1,17 @@
 package ru.restaurants.restvoting.web;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import ru.restaurants.restvoting.TestUtil;
 import ru.restaurants.restvoting.model.Restaurant;
+import ru.restaurants.restvoting.service.DishService;
+import ru.restaurants.restvoting.to.MenuItemTo;
 import ru.restaurants.restvoting.web.json.JsonUtil;
+
+import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -15,13 +21,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.restaurants.restvoting.TestData.*;
+import static ru.restaurants.restvoting.TestUtil.convertMenuItemsToDtos;
 import static ru.restaurants.restvoting.TestUtil.userHttpBasic;
 import static ru.restaurants.restvoting.web.RestaurantsRestController.RESTAURANTS_REST_URL;
 
 //https://docs.spring.io/spring-restdocs/docs/1.0.0.M1/reference/html5/#getting-started-build-configuration-maven-plugin-phase
 //https://opencredo.com/blogs/rest-api-tooling-review/
 class RestaurantsRestControllerTest extends AbstractRestControllerTest {
-
+    @Autowired
+    private DishService dishService;
 
     @Test
     void addRestaurant() throws Exception {
@@ -41,10 +49,15 @@ class RestaurantsRestControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    void createMenuItems() throws Exception {
-
+    void getAllRestaurants() throws Exception {
+        mockMvc.perform(get(RESTAURANTS_REST_URL)
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andDo(document("get_restaurants", responseFields(
+                        fieldWithPath("[]id").description("The Restaurant's id"),
+                        fieldWithPath("[]name").description("The Restaurant's name"))));
     }
-    //TODO - make this test to match MenuItemTOs instead of MenuItems. The equals method does not compare embedded dishes!
+
     @Test
     void getMenuOfRestaurant() throws Exception {
         mockMvc.perform(get(RESTAURANTS_REST_URL + "/100005/menu")
@@ -61,12 +74,15 @@ class RestaurantsRestControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    void getAllRestaurants() throws Exception {
-        this.mockMvc.perform(get(RESTAURANTS_REST_URL)
-        .with(userHttpBasic(ADMIN)))
-        .andExpect(status().isOk())
-        .andDo(document("get_restaurants", responseFields(
-                        fieldWithPath("[]id").description("The Restaurant's id"),
-                        fieldWithPath("[]name").description("The Restaurant's name"))));
+    void createMenuItems() throws Exception {
+        List<MenuItemTo> startList = convertMenuItemsToDtos(dishService.getAllByRestaurantId(10005));
+        mockMvc.perform(post(RESTAURANTS_REST_URL + "/100005/menu")
+                .contentType(MediaType.APPLICATION_JSON)
+                //TODO - write ArrayList instead of one MenuItem
+                .content(JsonUtil.writeValue(Collections.singletonList(created)))
+                .with(userHttpBasic(ADMIN)));
+        startList.add(MenuItemTo.createFromMenuItem(created));
+        List<MenuItemTo> endList = convertMenuItemsToDtos(dishService.getAllByRestaurantId(10005));
+        assertMatch(startList, endList);
     }
 }

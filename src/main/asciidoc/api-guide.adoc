@@ -45,3 +45,17 @@ include::{snippets}/get_menu_items/response-fields.adoc[]
 
 === Http response example
 include::{snippets}/get_menu_items/http-response.adoc[]
+
+[[create_menu_items]]
+== 4. Create menu items of a Restaurant
+=== Curl request
+include::{snippets}/create_menu_items/curl-request.adoc[]
+
+=== Http request
+include::{snippets}/create_menu_items/http-request.adoc[]
+
+=== Request fields
+include::{snippets}/create_menu_items/request-fields.adoc[]
+
+=== Http response example
+include::{snippets}/create_menu_items/http-response.adoc[]

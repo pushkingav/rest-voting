@@ -11,12 +11,12 @@ import ru.restaurants.restvoting.to.MenuItemTo;
 import ru.restaurants.restvoting.web.json.JsonUtil;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -75,14 +75,19 @@ class RestaurantsRestControllerTest extends AbstractRestControllerTest {
 
     @Test
     void createMenuItems() throws Exception {
-        List<MenuItemTo> startList = convertMenuItemsToDtos(dishService.getAllByRestaurantId(10005));
-        mockMvc.perform(post(RESTAURANTS_REST_URL + "/100005/menu")
+        List<MenuItemTo> startList = convertMenuItemsToDtos(dishService.getAllByRestaurantId(TEST_RESTAURANT_ID));
+        final MenuItemTo createdTo =  MenuItemTo.createFromMenuItem(created);
+        mockMvc.perform(post(RESTAURANTS_REST_URL + "/"+ TEST_RESTAURANT_ID +"/menu")
                 .contentType(MediaType.APPLICATION_JSON)
-                //TODO - write ArrayList instead of one MenuItem
-                .content(JsonUtil.writeValue(Collections.singletonList(created)))
-                .with(userHttpBasic(ADMIN)));
-        startList.add(MenuItemTo.createFromMenuItem(created));
-        List<MenuItemTo> endList = convertMenuItemsToDtos(dishService.getAllByRestaurantId(10005));
+                .content(JsonUtil.writeValue(Collections.singletonList(createdTo)))
+                .with(userHttpBasic(ADMIN)))
+        .andDo(document("create_menu_items", requestFields(
+                fieldWithPath("[].description").description("The name of the Dish"),
+                fieldWithPath("[].price").description("The price of the Dish"),
+                fieldWithPath("[].date").type(Date.class).description("The date when the Dish is served")
+                )));
+        startList.add(createdTo);
+        List<MenuItemTo> endList = convertMenuItemsToDtos(dishService.getAllByRestaurantId(TEST_RESTAURANT_ID));
         assertMatch(startList, endList);
     }
 }

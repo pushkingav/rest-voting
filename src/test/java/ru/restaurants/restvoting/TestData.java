@@ -18,6 +18,7 @@ import static ru.restaurants.restvoting.model.AbstractBaseEntity.START_SEQ;
 
 public class TestData {
     public static final int ADMIN_ID = START_SEQ + 1;
+    public static final int TEST_RESTAURANT_ID = 100005;
     public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN, Role.ROLE_USER);
 
     private static final Dish dish1 = new Dish(START_SEQ + 8, "Овсянка");

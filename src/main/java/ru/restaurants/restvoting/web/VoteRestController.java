@@ -11,21 +11,21 @@ import java.util.Map;
 
 @ComponentScan
 @RestController
-@RequestMapping(value=VoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value=VoteRestController.VOTES_REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteRestController {
-    static final String REST_URL = "/rest/votes";
+    public static final String VOTES_REST_URL = "/rest/votes";
 
     @Autowired
     private UserService userService;
-
-    @GetMapping()
-    public Map<Integer, Long> getVotesForToday() {
-        return userService.getVotesForToday();
-    }
 
     @PostMapping("/{restaurant_id}")
     public void voteForRestaurant(@PathVariable("restaurant_id") Integer restaurantId) {
         int userId = SecurityUtil.authUserId();
         userService.vote(restaurantId, userId);
+    }
+
+    @GetMapping()
+    public Map<Integer, Long> getVotesForToday() {
+        return userService.getVotesForToday();
     }
 }

@@ -37,21 +37,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private LocalTime lastVotingTime;
 
     @Override
-    public Integer addRestaurant(String name) {
-        return null;
-    }
-
-    @Override
-    public Optional<Restaurant> getRestaurantById(Integer id) {
-        return restaurantRepository.findById(id);
-    }
-
-    @Override
-    public List<Restaurant> getRestaurants() {
-        return restaurantRepository.findAll();
-    }
-
-    @Override
     public boolean vote(int restaurantId, int userId) {
         //Remember to run this app with option "-Duser.timezone=GMT" - to force date operations be in UTC timezone
         LocalDateTime localDateTime = LocalDateTime.now();

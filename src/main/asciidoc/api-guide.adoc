@@ -33,7 +33,7 @@ include::{snippets}/get_restaurants/response-fields.adoc[]
 include::{snippets}/get_restaurants/http-response.adoc[]
 
 [[get_menu_items]]
-== 3. Get menu items of a Restaurant
+== 3. Get menu items of the Restaurant
 === Curl request
 include::{snippets}/get_menu_items/curl-request.adoc[]
 
@@ -47,7 +47,7 @@ include::{snippets}/get_menu_items/response-fields.adoc[]
 include::{snippets}/get_menu_items/http-response.adoc[]
 
 [[create_menu_items]]
-== 4. Create menu items of a Restaurant
+== 4. Create menu items of the Restaurant
 === Curl request
 include::{snippets}/create_menu_items/curl-request.adoc[]
 
@@ -59,3 +59,14 @@ include::{snippets}/create_menu_items/request-fields.adoc[]
 
 === Http response example
 include::{snippets}/create_menu_items/http-response.adoc[]
+
+[[vote_for_restaurant]]
+== 5. Vote for the Restaurant
+=== Curl request
+include::{snippets}/vote_for_restaurant/curl-request.adoc[]
+
+=== Http request
+include::{snippets}/vote_for_restaurant/http-request.adoc[]
+
+=== Path parameters
+include::{snippets}/vote_for_restaurant/path-parameters.adoc[]

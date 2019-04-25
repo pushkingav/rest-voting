@@ -5,9 +5,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.restaurants.restvoting.service.UserService;
+import ru.restaurants.restvoting.to.VotesCountTo;
 import ru.restaurants.restvoting.util.SecurityUtil;
 
-import java.util.Map;
+import java.util.List;
 
 @ComponentScan
 @RestController
@@ -25,7 +26,7 @@ public class VoteRestController {
     }
 
     @GetMapping()
-    public Map<Integer, Long> getVotesForToday() {
+    public List<VotesCountTo> getVotesForToday() {
         return userService.getVotesForToday();
     }
 }

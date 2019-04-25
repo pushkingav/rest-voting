@@ -13,16 +13,18 @@ import ru.restaurants.restvoting.model.Vote;
 import ru.restaurants.restvoting.repository.RestaurantRepository;
 import ru.restaurants.restvoting.repository.UserRepository;
 import ru.restaurants.restvoting.repository.VoteRepository;
+import ru.restaurants.restvoting.to.VotesCountTo;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
 import ru.restaurants.restvoting.util.exception.TooLateForVoteException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -67,10 +69,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Map<Integer, Long> getVotesForToday() {
+    public List<VotesCountTo> getVotesForToday() {
         List<Object[]> raw = voteRepository.getVotesForToday();
-        Map<Integer, Long> result = new HashMap<>();
-        raw.forEach(objects -> result.put((Integer) objects[0], (Long) objects[1]));
+
+        List<Restaurant> restaurants = restaurantRepository.findAll();
+        Map<Integer, Restaurant> map = restaurants.stream().collect(Collectors.toMap(Restaurant::getId, restaurant -> restaurant));
+        List<VotesCountTo> result = new ArrayList<>();
+        for (Object[] obj : raw) {
+            VotesCountTo votesCountTo = new VotesCountTo();
+            votesCountTo.setRestaurant(map.get(obj[0]));
+            votesCountTo.setVotesCount((Long)obj[1]);
+            result.add(votesCountTo);
+        }
         return result;
     }
 

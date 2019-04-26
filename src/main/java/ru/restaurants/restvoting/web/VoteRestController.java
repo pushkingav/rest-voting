@@ -27,6 +27,6 @@ public class VoteRestController {
 
     @GetMapping()
     public List<VotesCountTo> getVotesForToday() {
-        return userService.getVotesForToday();
+        return userService.listVotesCountToForToday();
     }
 }

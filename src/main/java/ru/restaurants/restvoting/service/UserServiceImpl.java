@@ -20,10 +20,7 @@ import ru.restaurants.restvoting.util.exception.TooLateForVoteException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service("userService")
@@ -69,9 +66,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public List<VotesCountTo> getVotesForToday() {
+    public List<VotesCountTo> listVotesCountToForToday() {
         List<Object[]> raw = voteRepository.getVotesForToday();
-
         List<Restaurant> restaurants = restaurantRepository.findAll();
         Map<Integer, Restaurant> map = restaurants.stream().collect(Collectors.toMap(Restaurant::getId, restaurant -> restaurant));
         List<VotesCountTo> result = new ArrayList<>();
@@ -81,6 +77,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             votesCountTo.setVotesCount((Long)obj[1]);
             result.add(votesCountTo);
         }
+        return result;
+    }
+
+    @Override
+    public Map<Integer, Long> getMapOfVotesForToday() {
+        List<Object[]> raw = voteRepository.getVotesForToday();
+        Map<Integer, Long> result = new HashMap<>();
+        raw.forEach(objects -> result.put((Integer) objects[0], (Long) objects[1]));
         return result;
     }
 

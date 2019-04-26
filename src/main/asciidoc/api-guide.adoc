@@ -12,9 +12,6 @@ Andrew Pushkin;
 === Curl request
 include::{snippets}/add_restaurant/curl-request.adoc[]
 
-=== Http request
-include::{snippets}/add_restaurant/http-request.adoc[]
-
 === Http response example
 include::{snippets}/add_restaurant/http-response.adoc[]
 
@@ -22,9 +19,6 @@ include::{snippets}/add_restaurant/http-response.adoc[]
 == 2. Get all Restaurants
 === Curl request
 include::{snippets}/get_restaurants/curl-request.adoc[]
-
-=== Http request
-include::{snippets}/get_restaurants/http-request.adoc[]
 
 === Response fields
 include::{snippets}/get_restaurants/response-fields.adoc[]
@@ -37,9 +31,6 @@ include::{snippets}/get_restaurants/http-response.adoc[]
 === Curl request
 include::{snippets}/get_menu_items/curl-request.adoc[]
 
-=== Http request
-include::{snippets}/get_menu_items/http-request.adoc[]
-
 === Response fields
 include::{snippets}/get_menu_items/response-fields.adoc[]
 
@@ -50,9 +41,6 @@ include::{snippets}/get_menu_items/http-response.adoc[]
 == 4. Create menu items of the Restaurant
 === Curl request
 include::{snippets}/create_menu_items/curl-request.adoc[]
-
-=== Http request
-include::{snippets}/create_menu_items/http-request.adoc[]
 
 === Request fields
 include::{snippets}/create_menu_items/request-fields.adoc[]
@@ -65,8 +53,16 @@ include::{snippets}/create_menu_items/http-response.adoc[]
 === Curl request
 include::{snippets}/vote_for_restaurant/curl-request.adoc[]
 
-=== Http request
-include::{snippets}/vote_for_restaurant/http-request.adoc[]
-
 === Path parameters
 include::{snippets}/vote_for_restaurant/path-parameters.adoc[]
+
+[[get_votes_for_today]]
+== 6. Get votes for today
+=== Curl request
+include::{snippets}/get_votes_for_today/curl-request.adoc[]
+
+=== Response fields
+include::{snippets}/get_votes_for_today/response-fields.adoc[]
+
+=== Http response example
+include::{snippets}/get_votes_for_today/http-response.adoc[]

@@ -22,7 +22,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.restaurants.restvoting.TestData.ADMIN;
 import static ru.restaurants.restvoting.TestData.TEST_RESTAURANT_ID;
-import static ru.restaurants.restvoting.TestUtil.print;
 import static ru.restaurants.restvoting.TestUtil.userHttpBasic;
 import static ru.restaurants.restvoting.web.VoteRestController.VOTES_REST_URL;
 
@@ -43,7 +42,7 @@ class VoteRestControllerTest extends AbstractRestControllerTest {
             log.info("This test must be run before {}, but now it's too late", lastVotingTime.toString());
             return;
         }
-        Map<Integer, Long> oldVotesForToday = userService.getVotesForToday();
+        Map<Integer, Long> oldVotesForToday = userService.getMapOfVotesForToday();
         assertThat(oldVotesForToday.get(TEST_RESTAURANT_ID)).isEqualTo(2L);
         assertThat(oldVotesForToday.get(TEST_RESTAURANT_ID + 1)).isEqualTo(1L);
 
@@ -55,7 +54,7 @@ class VoteRestControllerTest extends AbstractRestControllerTest {
                 .andDo(document("vote_for_restaurant", pathParameters(
                         parameterWithName("restaurant_id").description("The Restaurant's id we are voting for")
         )));
-        Map<Integer, Long> newVotesForToday = userService.getVotesForToday();
+        Map<Integer, Long> newVotesForToday = userService.getMapOfVotesForToday();
         assertThat(newVotesForToday.get(TEST_RESTAURANT_ID)).isEqualTo(1L);
         assertThat(newVotesForToday.get(TEST_RESTAURANT_ID + 1)).isEqualTo(2L);
     }
@@ -66,10 +65,11 @@ class VoteRestControllerTest extends AbstractRestControllerTest {
                 mockMvc.perform(get(VOTES_REST_URL).with(userHttpBasic(ADMIN)))
                         .andExpect(status().is2xxSuccessful())
                 .andDo(document("get_votes_for_today", responseFields(
-                        fieldWithPath("100005").optional().type(String.class).description("The Restaurant's id"),
-                        fieldWithPath("a").optional().type(Long.class).description("Votes count for this Restaurant")
+                        fieldWithPath("[].restaurant").description("The Restaurant"),
+                        fieldWithPath("[].restaurant.id").description("The Restaurant's id"),
+                        fieldWithPath("[].restaurant.name").description("The Restaurant's name"),
+                        fieldWithPath("[].votesCount").type(Long.class).description("Votes count for this Restaurant")
                 )));
-        print(actions);
     }
 
     @Test

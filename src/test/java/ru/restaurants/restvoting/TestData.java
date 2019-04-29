@@ -6,6 +6,7 @@ import ru.restaurants.restvoting.model.MenuItem;
 import ru.restaurants.restvoting.model.Role;
 import ru.restaurants.restvoting.model.User;
 import ru.restaurants.restvoting.to.MenuItemTo;
+import ru.restaurants.restvoting.to.VotesCountTo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,11 +28,12 @@ public class TestData {
     private static final Dish dish4 = new Dish(START_SEQ + 11, "Стейк");
     private static final Dish createdDish = new Dish(null, "Рубленая котлета");
 
-    private static final MenuItem item1 = new MenuItem(START_SEQ + 16, LocalDate.now(), new BigDecimal(50), dish1);
-    private static final MenuItem item2 = new MenuItem(START_SEQ + 18, LocalDate.now(), new BigDecimal(75), dish2);
-    private static final MenuItem item3 = new MenuItem(START_SEQ + 19, LocalDate.now(), new BigDecimal(100), dish3);
-    private static final MenuItem item4 = new MenuItem(START_SEQ + 20, LocalDate.now(), new BigDecimal(500), dish4);
-    public static final MenuItem created = new MenuItem(null, LocalDate.now(), new BigDecimal(100), createdDish);
+    //Prices are given in kopecks/cents
+    private static final MenuItem item1 = new MenuItem(START_SEQ + 16, LocalDate.now(), new BigDecimal(5000), dish1);
+    private static final MenuItem item2 = new MenuItem(START_SEQ + 18, LocalDate.now(), new BigDecimal(7550), dish2);
+    private static final MenuItem item3 = new MenuItem(START_SEQ + 19, LocalDate.now(), new BigDecimal(10000), dish3);
+    private static final MenuItem item4 = new MenuItem(START_SEQ + 20, LocalDate.now(), new BigDecimal(50000), dish4);
+    public static final MenuItem created = new MenuItem(null, LocalDate.now(), new BigDecimal(10000), createdDish);
 
     public static final List<MenuItem> MENU_ITEMS = List.of(item1, item2, item3, item4);
 
@@ -40,7 +42,11 @@ public class TestData {
     }
 
     public static ResultMatcher getMenuItemsToMatcher(List<MenuItem> expected) {
-        return result -> assertThat(convertMenuItemsToDtos(readListFromJsonMvcResult(result, MenuItem.class))).isEqualTo(convertMenuItemsToDtos(expected));
+        return result -> assertMatch(convertMenuItemsToDtos(readListFromJsonMvcResult(result, MenuItem.class)),
+                convertMenuItemsToDtos(expected));
     }
 
+    public static ResultMatcher getVotesCountToMatcher(List<VotesCountTo> expected) {
+        return result -> assertThat(readListFromJsonMvcResult(result, VotesCountTo.class)).isEqualTo(expected);
+    }
 }

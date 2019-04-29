@@ -5,10 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.test.web.servlet.ResultActions;
 import ru.restaurants.restvoting.service.UserService;
+import ru.restaurants.restvoting.to.VotesCountTo;
 
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,8 +21,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.restaurants.restvoting.TestData.ADMIN;
-import static ru.restaurants.restvoting.TestData.TEST_RESTAURANT_ID;
+import static ru.restaurants.restvoting.TestData.*;
 import static ru.restaurants.restvoting.TestUtil.userHttpBasic;
 import static ru.restaurants.restvoting.web.VoteRestController.VOTES_REST_URL;
 
@@ -61,19 +61,22 @@ class VoteRestControllerTest extends AbstractRestControllerTest {
 
     @Test
     void getVotesForToday() throws Exception {
-        ResultActions actions =
-                mockMvc.perform(get(VOTES_REST_URL).with(userHttpBasic(ADMIN)))
-                        .andExpect(status().is2xxSuccessful())
-                .andDo(document("get_votes_for_today", responseFields(
-                        fieldWithPath("[].restaurant").description("The Restaurant"),
-                        fieldWithPath("[].restaurant.id").description("The Restaurant's id"),
-                        fieldWithPath("[].restaurant.name").description("The Restaurant's name"),
-                        fieldWithPath("[].votesCount").type(Long.class).description("Votes count for this Restaurant")
-                )));
+        List<VotesCountTo> votesCountTos = userService.listVotesCountToForToday();
+        mockMvc.perform(get(VOTES_REST_URL).with(userHttpBasic(ADMIN)))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(getVotesCountToMatcher(votesCountTos))
+        .andDo(document("get_votes_for_today", responseFields(
+                fieldWithPath("[].restaurant").description("The Restaurant"),
+                fieldWithPath("[].restaurant.id").description("The Restaurant's id"),
+                fieldWithPath("[].restaurant.name").description("The Restaurant's name"),
+                fieldWithPath("[].votesCount").type(Long.class).description("Votes count for this Restaurant")
+        )));
     }
 
     @Test
     void testVoteFailAfterStopHour() throws Exception {
-
+        //Тут надо получить текущее время,
+        //установить параметр last.voting.time равным текущему времени - пока не знаю как это сделать - он уже во внутренностях Spring
+        //переголосовать уже после last.voting.time и получить ошибку о том, что после last.voting.time переголосовать нельзя.
     }
 }

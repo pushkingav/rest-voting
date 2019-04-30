@@ -1,5 +1,5 @@
 = REST API Guide for the "Restaurant Voting System"
-Andrew Pushkin;
+by Andrew Pushkin;
 :doctype: book
 :toc:
 :sectanchors:

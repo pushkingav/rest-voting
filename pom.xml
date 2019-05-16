@@ -73,9 +73,6 @@
                 <version>2.22.1</version>
                 <configuration>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
-                    <includes>
-                        <include>**/*Documentation.java</include>
-                    </includes>
                     <systemPropertyVariables>
                         <org.springframework.restdocs.outputDir>
                             ${snippetsDirectory}

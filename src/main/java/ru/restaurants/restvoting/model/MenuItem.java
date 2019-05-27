@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "menu")
+@Table(name = "menu_items")
 public class MenuItem extends AbstractBaseEntity {
     /**
      *  A date when this dish have been added to the menu

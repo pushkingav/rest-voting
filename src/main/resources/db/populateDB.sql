@@ -1,4 +1,4 @@
-DELETE FROM menu;
+DELETE FROM menu_items;
 DELETE FROM user_roles;
 DELETE FROM dishes;
 DELETE FROM users;
@@ -29,7 +29,7 @@ VALUES ('Овсянка'), ('Омлет'), ('Салатик'), ('Стейк'),
        ('Гренки'), ('Борщ'), ('Цыпленок табака'), ('Пиво'), ('Тарелка овощная');
 
 -- Prices are given in kopecks/cents
-INSERT INTO menu (restaurant_id, dish_id, date, price) VALUES (100005, 100008, NOW, 5000),
+INSERT INTO menu_items (restaurant_id, dish_id, date, price) VALUES (100005, 100008, NOW, 5000),
 																															(100005, 100009, NOW, 7550),
 																															(100005, 100010, NOW, 10000),
 																															(100005, 100011, NOW, 50000),

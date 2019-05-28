@@ -25,8 +25,6 @@ import static ru.restaurants.restvoting.TestUtil.convertMenuItemsToDtos;
 import static ru.restaurants.restvoting.TestUtil.userHttpBasic;
 import static ru.restaurants.restvoting.web.RestaurantsRestController.RESTAURANTS_REST_URL;
 
-//https://docs.spring.io/spring-restdocs/docs/1.0.0.M1/reference/html5/#getting-started-build-configuration-maven-plugin-phase
-//https://opencredo.com/blogs/rest-api-tooling-review/
 class RestaurantsRestControllerTest extends AbstractRestControllerTest {
     @Autowired
     private DishService dishService;

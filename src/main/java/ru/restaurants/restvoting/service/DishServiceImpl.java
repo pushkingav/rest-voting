@@ -1,8 +1,6 @@
 package ru.restaurants.restvoting.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.restaurants.restvoting.model.Dish;
@@ -30,23 +28,6 @@ public class DishServiceImpl implements DishService {
     @Autowired
     private MenuItemRepository menuItemRepository;
 
-    @CacheEvict(value = "restaurants", allEntries = true)
-    @Transactional
-    @Override
-    public Restaurant addRestaurant(Restaurant restaurant, Integer id) {
-        Optional<Restaurant> checked = restaurantRepository.findByName(restaurant.getName());
-        if (checked.isPresent()) {
-            throw new RuntimeException("Such a restaurant already exists: " + restaurant.getName());
-        }
-        return restaurantRepository.save(restaurant);
-    }
-
-    @Cacheable("restaurants")
-    @Override
-    public List<Restaurant> getAllRestaurants() {
-        return restaurantRepository.findAll();
-    }
-
     @Override
     public Dish create(Dish dish) {
         return dishRepository.save(dish);
@@ -72,11 +53,6 @@ public class DishServiceImpl implements DishService {
             menuItem.setRestaurant(restaurant.get());
             menuItemRepository.save(menuItem);
         }
-    }
-
-    @Override
-    public Dish update(Dish dish, int restaurant_id) {
-        return dishRepository.save(dish);
     }
 
     @Override

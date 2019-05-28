@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.restaurants.restvoting.model.MenuItem;
 import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.service.DishService;
+import ru.restaurants.restvoting.service.RestaurantService;
 import ru.restaurants.restvoting.to.MenuItemTo;
 
 import javax.validation.Valid;
@@ -24,11 +25,13 @@ public class RestaurantsRestController {
     @Autowired
     private DishService dishService;
 
+    @Autowired
+    private RestaurantService restaurantService;
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> addRestaurant(@Valid @RequestBody Restaurant restaurant) {
-        Restaurant created = dishService.addRestaurant(restaurant, null);
+        Restaurant created = restaurantService.addRestaurant(restaurant, null);
         if (created != null) {
-            //TODO - change to ResponseEntity.created(URI location)
             return ResponseEntity.ok(created);
         }
         return ResponseEntity.unprocessableEntity().build();
@@ -36,7 +39,7 @@ public class RestaurantsRestController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getAllRestaurants() {
-        return dishService.getAllRestaurants();
+        return restaurantService.getAllRestaurants();
     }
 
     @PostMapping(value = "/{restaurantId}/menu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -42,6 +42,11 @@ public class RestaurantsRestController {
         return restaurantService.getAllRestaurants();
     }
 
+    @GetMapping(value = "/menu",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Restaurant> getAllRestaurantsWithMenuItems() {
+        return restaurantService.getAllRestaurantsWithMenu();
+    }
+
     @PostMapping(value = "/{restaurantId}/menu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void createMenuItems(@Valid @RequestBody List<MenuItemTo> menuItemToList, @PathVariable Integer restaurantId) {

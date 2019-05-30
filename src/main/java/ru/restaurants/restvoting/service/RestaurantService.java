@@ -9,4 +9,6 @@ public interface RestaurantService {
 
     List<Restaurant> getAllRestaurants();
 
+    List<Restaurant> getAllRestaurantsWithMenu();
+
 }

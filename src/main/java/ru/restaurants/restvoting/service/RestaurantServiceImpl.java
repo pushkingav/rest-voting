@@ -1,5 +1,6 @@
 package ru.restaurants.restvoting.service;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -31,6 +32,14 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public List<Restaurant> getAllRestaurants() {
         return restaurantRepository.findAll();
+    }
+
+    @Transactional
+    @Override
+    public List<Restaurant> getAllRestaurantsWithMenu() {
+        List<Restaurant> restaurants = restaurantRepository.findAll();
+        restaurants.forEach(p -> Hibernate.initialize(p.getMenuItems()));
+        return restaurants;
     }
 
 }

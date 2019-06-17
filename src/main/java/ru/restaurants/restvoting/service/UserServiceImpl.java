@@ -20,7 +20,10 @@ import ru.restaurants.restvoting.util.exception.TooLateForVoteException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service("userService")
@@ -37,31 +40,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public boolean vote(int restaurantId, int userId) {
-        //Remember to run this app with option "-Duser.timezone=GMT" - to force date operations be in UTC timezone
+        //Hold the local time of the vote for further using
         LocalDateTime localDateTime = LocalDateTime.now();
-        LocalTime localTime = localDateTime.toLocalTime();
-        Optional<Restaurant> restaurantOptional = restaurantRepository.findById(restaurantId);
-        if (restaurantOptional.isEmpty()) {
-            throw new NotFoundException("No restaurant found with id " + restaurantId);
-        }
-        Optional<Vote> optionalVote = voteRepository.getByUserIdAndDate(userId, LocalDate.now());
-        Vote vote;
-        if (optionalVote.isEmpty()) {
-            vote = new Vote();
-        } else {
-            if (localTime.isAfter(lastVotingTime)) {
-                throw new TooLateForVoteException("Your vote can't be changed after 11:00 UTC");
-            }
-            vote = optionalVote.get();
-        }
+        restaurantRepository.findById(restaurantId).orElseThrow(
+                ()-> new NotFoundException("No restaurant found with id " + restaurantId)
+        );
+        Vote vote = voteRepository.getByUserIdAndDate(userId, LocalDate.now()).orElseThrow(
+                () -> new TooLateForVoteException(String.format("Your vote can't be changed after %s", lastVotingTime.toString()))
+        );
         vote.setDate(localDateTime.toLocalDate());
         vote.setRestaurantId(restaurantId);
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            vote.setUser(user.get());
-        } else {
-            throw new NotFoundException(String.format("No user found with id %s", userId));
-        }
+
+        userRepository.findById(userId).orElseThrow(
+                () -> new NotFoundException(String.format("No user found with id %s", userId))
+        );
         return voteRepository.save(vote) != null;
     }
 

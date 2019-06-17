@@ -43,7 +43,7 @@ Cache-Control: no-cache
 Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
 
 ### 6. User votes for the best restaurant
-POST http://localhost:18080/restvoting/rest/votes/100003
+POST http://localhost:18080/restvoting/rest/votes/100005
 Accept: */*
 Content-Type: application/json
 Cache-Control: no-cache

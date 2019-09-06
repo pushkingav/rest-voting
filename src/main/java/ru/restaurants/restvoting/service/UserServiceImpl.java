@@ -40,7 +40,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public boolean vote(int restaurantId, int userId) {
-        //Hold the local time of the vote for further using
         LocalDateTime localDateTime = LocalDateTime.now();
         restaurantRepository.findById(restaurantId).orElseThrow(
                 ()-> new NotFoundException("No restaurant found with id " + restaurantId)

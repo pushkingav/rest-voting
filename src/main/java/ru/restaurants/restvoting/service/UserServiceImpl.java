@@ -7,24 +7,20 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.restaurants.restvoting.AuthorizedUser;
-import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.model.User;
 import ru.restaurants.restvoting.model.Vote;
 import ru.restaurants.restvoting.repository.RestaurantRepository;
 import ru.restaurants.restvoting.repository.UserRepository;
 import ru.restaurants.restvoting.repository.VoteRepository;
-import ru.restaurants.restvoting.to.VotesCountTo;
 import ru.restaurants.restvoting.util.exception.NotFoundException;
 import ru.restaurants.restvoting.util.exception.TooLateForVoteException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -39,7 +35,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private LocalTime lastVotingTime;
 
     @Override
-    public boolean vote(int restaurantId, int userId) {
+    public Vote vote(int restaurantId, int userId) {
         LocalDateTime localDateTime = LocalDateTime.now();
         restaurantRepository.findById(restaurantId).orElseThrow(
                 ()-> new NotFoundException("No restaurant found with id " + restaurantId)
@@ -53,22 +49,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.findById(userId).orElseThrow(
                 () -> new NotFoundException(String.format("No user found with id %s", userId))
         );
-        return voteRepository.save(vote) != null;
-    }
-
-    @Override
-    public List<VotesCountTo> listVotesCountToForToday() {
-        List<Object[]> raw = voteRepository.getVotesForToday();
-        List<Restaurant> restaurants = restaurantRepository.findAll();
-        Map<Integer, Restaurant> map = restaurants.stream().collect(Collectors.toMap(Restaurant::getId, restaurant -> restaurant));
-        List<VotesCountTo> result = new ArrayList<>();
-        for (Object[] obj : raw) {
-            VotesCountTo votesCountTo = new VotesCountTo();
-            votesCountTo.setRestaurant(map.get(obj[0]));
-            votesCountTo.setVotesCount((Long)obj[1]);
-            result.add(votesCountTo);
-        }
-        return result;
+        return voteRepository.save(vote);
     }
 
     @Override

@@ -30,13 +30,13 @@ public class ExceptionInfoHandler {
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(NotFoundException.class)
     public ErrorInfo handleError(HttpServletRequest req, NotFoundException e) {
-        return logAndGetErrorInfo(req, e,true, DATA_NOT_FOUND);
+        return logAndGetErrorInfo(req, e, true, DATA_NOT_FOUND);
     }
 
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(TooLateForVoteException.class)
     public ErrorInfo handleTooLateForVoteError(HttpServletRequest req, TooLateForVoteException e) {
-        return logAndGetErrorInfo(req, e,true, VALIDATION_ERROR);
+        return new ErrorInfo(req.getRequestURL(), VALIDATION_ERROR, ValidationUtil.getMessage(ValidationUtil.getRootCause(e)));
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class})
@@ -45,8 +45,7 @@ public class ExceptionInfoHandler {
         return logAndGetErrorInfo(req, e, true, VALIDATION_ERROR);
     }
 
-
-//    https://stackoverflow.com/questions/538870/should-private-helper-methods-be-static-if-they-can-be-static
+    //https://stackoverflow.com/questions/538870/should-private-helper-methods-be-static-if-they-can-be-static
     private static ErrorInfo logAndGetErrorInfo(HttpServletRequest req, Exception e, boolean logException, ErrorType errorType) {
         Throwable rootCause = ValidationUtil.getRootCause(e);
         if (logException) {

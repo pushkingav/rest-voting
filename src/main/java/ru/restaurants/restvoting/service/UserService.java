@@ -1,14 +1,11 @@
 package ru.restaurants.restvoting.service;
 
-import ru.restaurants.restvoting.to.VotesCountTo;
+import ru.restaurants.restvoting.model.Vote;
 
-import java.util.List;
 import java.util.Map;
 
 public interface UserService {
-    boolean vote(int restaurantId, int userId);
-
-    List<VotesCountTo> listVotesCountToForToday();
+    Vote vote(int restaurantId, int userId);
 
     Map<Integer, Long> getMapOfVotesForToday();
 }

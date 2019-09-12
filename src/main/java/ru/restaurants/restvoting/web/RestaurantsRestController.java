@@ -11,6 +11,7 @@ import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.service.DishService;
 import ru.restaurants.restvoting.service.RestaurantService;
 import ru.restaurants.restvoting.to.MenuItemTo;
+import ru.restaurants.restvoting.to.RestaurantTo;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -38,7 +39,7 @@ public class RestaurantsRestController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Restaurant> getAllRestaurants() {
+    public List<RestaurantTo> getAllRestaurants() {
         return restaurantService.getAllRestaurants();
     }
 

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.repository.RestaurantRepository;
+import ru.restaurants.restvoting.to.RestaurantTo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,8 +32,11 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Cacheable("restaurants")
     @Override
-    public List<Restaurant> getAllRestaurants() {
-        return restaurantRepository.findAll();
+    public List<RestaurantTo> getAllRestaurants() {
+        List<Restaurant> restaurants = restaurantRepository.findAll();
+        List<RestaurantTo> result = new ArrayList<>();
+        restaurants.forEach(r -> result.add(RestaurantTo.createFromRestaurant(r)));
+        return result;
     }
 
     @Transactional

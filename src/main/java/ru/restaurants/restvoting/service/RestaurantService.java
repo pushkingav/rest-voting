@@ -8,6 +8,8 @@ import java.util.List;
 public interface RestaurantService {
     Restaurant addRestaurant(Restaurant restaurant, Integer restaurantId);
 
+    Restaurant editRestaurant(Integer restaurantId, String newName);
+
     List<RestaurantTo> getAllRestaurants();
 
     List<Restaurant> getAllRestaurantsWithMenu();

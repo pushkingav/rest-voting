@@ -9,10 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.repository.RestaurantRepository;
 import ru.restaurants.restvoting.to.RestaurantTo;
+import ru.restaurants.restvoting.util.exception.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
@@ -23,11 +23,19 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Transactional
     @Override
     public Restaurant addRestaurant(Restaurant restaurant, Integer id) {
-        Optional<Restaurant> checked = restaurantRepository.findByName(restaurant.getName());
-        if (checked.isPresent()) {
-            throw new RuntimeException("Such a restaurant already exists: " + restaurant.getName());
-        }
+        restaurantRepository.findByName(restaurant.getName()).ifPresent(r -> {
+            throw new RuntimeException("Such a restaurant already exists: " + r.getName());
+        });
         return restaurantRepository.save(restaurant);
+    }
+
+    @Override
+    public Restaurant editRestaurant(Integer restaurantId, String newName) {
+        Restaurant restaurantForEditing = restaurantRepository.findById(restaurantId).orElseThrow(
+                () -> new NotFoundException("No restaurant found with id " + restaurantId)
+        );
+        restaurantForEditing.setName(newName);
+        return restaurantRepository.save(restaurantForEditing);
     }
 
     @Cacheable("restaurants")

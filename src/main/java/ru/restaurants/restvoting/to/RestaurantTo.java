@@ -4,7 +4,7 @@ import ru.restaurants.restvoting.model.Restaurant;
 
 import javax.validation.constraints.NotNull;
 
-public class RestaurantTo extends BaseTo{
+public class RestaurantTo extends BaseTo {
     @NotNull
     private String name;
 

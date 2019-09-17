@@ -1,6 +1,5 @@
 package ru.restaurants.restvoting.web;
 
-import com.fasterxml.jackson.databind.node.TextNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
@@ -39,6 +38,15 @@ public class RestaurantsRestController {
         return ResponseEntity.unprocessableEntity().build();
     }
 
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Restaurant> editRestaurant(@Valid @RequestBody Restaurant restaurant, @PathVariable("id") int id) {
+        Restaurant edited = restaurantService.editRestaurant(id, restaurant.getName());
+        if (edited != null) {
+            return ResponseEntity.ok(edited);
+        }
+        return ResponseEntity.unprocessableEntity().build();
+    }
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<RestaurantTo> getAllRestaurants() {
         return restaurantService.getAllRestaurants();
@@ -47,15 +55,6 @@ public class RestaurantsRestController {
     @GetMapping(value = "/menu",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getAllRestaurantsWithMenuItems() {
         return restaurantService.getAllRestaurantsWithMenu();
-    }
-
-    @PutMapping(value = "/{restaurantId}/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> editRestaurant(@PathVariable("restaurantId") Integer restaurantId, @RequestBody TextNode newName) {
-        Restaurant edited = restaurantService.editRestaurant(restaurantId, newName.asText());
-        if (edited != null) {
-            return ResponseEntity.ok(edited);
-        }
-        return ResponseEntity.unprocessableEntity().build();
     }
 
     @PostMapping(value = "/{restaurantId}/menu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

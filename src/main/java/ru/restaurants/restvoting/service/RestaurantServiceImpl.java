@@ -29,6 +29,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantRepository.save(restaurant);
     }
 
+    @Transactional
     @Override
     public Restaurant editRestaurant(Integer restaurantId, String newName) {
         Restaurant restaurantForEditing = restaurantRepository.findById(restaurantId).orElseThrow(

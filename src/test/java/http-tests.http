@@ -13,13 +13,13 @@ Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
 {"name":"Добавленный Ресторан 1"}
 
 ### 2. Admin may edit a Restaurant
-PUT http://localhost:18080/restvoting/rest/restaurants/100034/edit
+PUT http://localhost:18080/restvoting/rest/restaurants/100034
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
 
-{"name": "Измененный Ресторан 1"}
+{"name":"Измененный Ресторан 1"}
 
 ### 3. Admin adds dishes to menu of one Restaurant
 POST http://localhost:18080/restvoting/rest/restaurants/100005/menu

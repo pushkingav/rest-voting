@@ -2,19 +2,15 @@ package ru.restaurants.restvoting.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.restaurants.restvoting.model.MenuItem;
 import ru.restaurants.restvoting.model.Restaurant;
 import ru.restaurants.restvoting.service.DishService;
 import ru.restaurants.restvoting.service.RestaurantService;
-import ru.restaurants.restvoting.to.MenuItemTo;
 import ru.restaurants.restvoting.to.RestaurantTo;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
 
 @ComponentScan
@@ -30,7 +26,7 @@ public class RestaurantsRestController {
     private RestaurantService restaurantService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> addRestaurant(@Valid @RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> add(@Valid @RequestBody Restaurant restaurant) {
         Restaurant created = restaurantService.addRestaurant(restaurant, null);
         if (created != null) {
             return ResponseEntity.ok(created);
@@ -39,7 +35,7 @@ public class RestaurantsRestController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> editRestaurant(@Valid @RequestBody Restaurant restaurant, @PathVariable("id") int id) {
+    public ResponseEntity<Restaurant> edit(@Valid @RequestBody Restaurant restaurant, @PathVariable("id") int id) {
         Restaurant edited = restaurantService.editRestaurant(id, restaurant.getName());
         if (edited != null) {
             return ResponseEntity.ok(edited);
@@ -48,27 +44,12 @@ public class RestaurantsRestController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<RestaurantTo> getAllRestaurants() {
+    public List<RestaurantTo> getAll() {
         return restaurantService.getAllRestaurants();
     }
 
     @GetMapping(value = "/menu",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Restaurant> getAllRestaurantsWithMenuItems() {
+    public List<Restaurant> getAllWithMenuItems() {
         return restaurantService.getAllRestaurantsWithMenu();
-    }
-
-    @PostMapping(value = "/{restaurantId}/menu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void createMenuItems(@Valid @RequestBody List<MenuItemTo> menuItemToList, @PathVariable Integer restaurantId) {
-        dishService.addDishes(menuItemToList, restaurantId);
-    }
-
-    @GetMapping("/{restaurantId}/menu")
-    public List<MenuItem> getMenuItemsOfRestaurant(@PathVariable("restaurantId") Integer restaurantId,
-                                                   @RequestParam(value = "date", required = false) LocalDate date) {
-        if (date == null) {
-            return dishService.getAllByRestaurantId(restaurantId);
-        }
-        return dishService.getAllByRestaurantIdAndDate(restaurantId, date);
     }
 }
